@@ -1,0 +1,12 @@
+{
+    "name": "hexlet/code",
+    "description": "hexlet php-package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MT-cod",
+            "email": "mammmoth@list.ru"
+        }
+    ],
+    "require": {}
+}
