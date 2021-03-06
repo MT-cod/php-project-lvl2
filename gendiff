@@ -17,5 +17,15 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$args = Docopt::handle($doc);
+$args = Docopt::handle($doc, array('version'=>'v0.0.1'));
+foreach ($args as $k=>$v)
+    echo $k.': '.json_encode($v).PHP_EOL;
 
+function genDiff($args)
+{
+    $file1 = json_decode(file_get_contents($args['<firstFile>']), true);
+    $file2 = json_decode(file_get_contents($args['<secondFile>']), true);
+    $diff = array_merge($file1, $file2);
+    return json_encode ($diff);
+}
+echo(genDiff($args));
