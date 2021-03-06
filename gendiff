@@ -35,7 +35,35 @@ function genDiff($args)
 {
     $file1 = json_decode(file_get_contents($args['<firstFile>']), true);
     $file2 = json_decode(file_get_contents($args['<secondFile>']), true);
-    $diff = array_merge($file1, $file2);
-    return json_encode ($diff);
+    $merged = array_merge($file1, $file2);
+    ksort($merged);
+    foreach ($merged as $key => $item) {
+        if (!key_exists($key, $file1) && key_exists($key, $file2)) {
+            $res['+' . $key] =  ifBoolToString($item);
+        } elseif (key_exists($key, $file1) && !key_exists($key, $file2)) {
+            $res['-' . $key] =  ifBoolToString($item);
+        } else {
+            if ($file1[$key] === $file2[$key]) {
+                $res[$key] = ifBoolToString($item);
+            } else {
+                $res['-' . $key] = ifBoolToString($file1[$key]);
+                $res['+' . $key] = ifBoolToString($file2[$key]);
+            }
+        }
+    }
+    //return json_encode($res);
+    print_r($res);
 }
+
+function ifBoolToString(mixed $value): mixed
+{
+    if ($value === true) {
+        return 'true';
+    } elseif ($value === false) {
+        return 'false';
+    } else {
+        return $value;
+    }
+}
+
 echo(genDiff($args));
