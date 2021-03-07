@@ -10,6 +10,14 @@
         }
     ],
     "bin": [
-        "gendiff"
-    ]
+        "src/gendiff"
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
+    },
+    "scripts": {
+        "phpcs": [
+            "./vendor/bin/phpcs"
+        ]
+    }
 }
