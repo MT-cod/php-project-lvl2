@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-//Подгрузка необходимого>>>
+//Подключаем и "заряжаем" Docopt>>>
 require __DIR__.'/src/docopt.php';
 /*$autoloadPath1 = __DIR__ . '/../../../autoload.php';
 $autoloadPath2 = __DIR__ . '/vendor/autoload.php';
@@ -11,7 +11,6 @@ if (file_exists($autoloadPath1)) {
 } else {
     require_once $autoloadPath2;
 }*/
-//<<<Подгрузка необходимого
 
 $doc = <<<'DOCOPT'
 Generate diff
@@ -28,33 +27,37 @@ Options:
 DOCOPT;
 
 $args = Docopt::handle($doc, array('version'=>'v0.0.1'));
-foreach ($args as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;
+/*foreach ($args as $k=>$v)
+    echo $k.': '.json_encode($v).PHP_EOL;*/
+//<<<Подключаем и "заряжаем" Docopt
 
-function genDiff($args)
+
+function genDiff(Docopt\Response $args): string
 {
     $file1 = json_decode(file_get_contents($args['<firstFile>']), true);
     $file2 = json_decode(file_get_contents($args['<secondFile>']), true);
     $merged = array_merge($file1, $file2);
     ksort($merged);
+    $res = "{\n";
     foreach ($merged as $key => $item) {
         if (!key_exists($key, $file1) && key_exists($key, $file2)) {
-            $res['+' . $key] =  ifBoolToString($item);
+            $res .=  "+ $key: " . ifBoolToString($item) . "\n";
         } elseif (key_exists($key, $file1) && !key_exists($key, $file2)) {
-            $res['-' . $key] =  ifBoolToString($item);
+            $res .=  "- $key: " . ifBoolToString($item) . "\n";
         } else {
             if ($file1[$key] === $file2[$key]) {
-                $res[$key] = ifBoolToString($item);
+                $res .=  "  $key: " . ifBoolToString($item) . "\n";
             } else {
-                $res['-' . $key] = ifBoolToString($file1[$key]);
-                $res['+' . $key] = ifBoolToString($file2[$key]);
+                $res .=  "- $key: " . ifBoolToString($file1[$key]) . "\n";
+                $res .=  "+ $key: " . ifBoolToString($file2[$key]) . "\n";
             }
         }
     }
-    //return json_encode($res);
-    print_r($res);
+    $res .= "}\n";
+    return $res;
 }
 
+//Проверяем, если значение булево, то возвращаем его эквивалент в строке
 function ifBoolToString(mixed $value): mixed
 {
     if ($value === true) {
