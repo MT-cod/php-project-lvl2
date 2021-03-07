@@ -1,0 +1,22 @@
+name: superlinter
+on:
+  - push
+  - pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        # Check-out repository under GitHub workspace
+      - uses: actions/checkout@v2
+        # Step's name
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          # Specify the PHP version
+          php-version: '8.0'
+      - name: Install
+        # Install project
+        run: make install
+      - name: Linter
+        # Run Linter
+        run: make lint
