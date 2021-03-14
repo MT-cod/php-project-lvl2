@@ -3,4 +3,4 @@ install:
 validate:
 	composer validate
 lint:
-	composer run-script phpcs -- --standard=PSR12 bin
+	composer run-script phpcs -- --standard=PSR12 bin tests
