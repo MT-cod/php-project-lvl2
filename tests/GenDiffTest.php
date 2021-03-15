@@ -20,7 +20,9 @@ class GenDiffTest extends TestCase
 + verbose: true
 }
 ';
-        $this->runDiffResult = shell_exec(__DIR__ . '/../bin/gendiff '.__DIR__.'/fixtures/file1.json '.__DIR__.'/fixtures/file2.json');
+        $this->runDiffResult = shell_exec(
+            __DIR__ . '/../bin/gendiff ' . __DIR__ . '/fixtures/file1.json ' . __DIR__ . '/fixtures/file2.json'
+        );
         $this->assertEquals($this->rightResult, $this->runDiffResult);
     }
 }
