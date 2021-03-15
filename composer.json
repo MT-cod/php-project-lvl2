@@ -12,12 +12,17 @@
     "bin": [
         "bin/gendiff"
     ],
-    "require-dev": {
-        "squizlabs/php_codesniffer": "*"
-    },
     "scripts": {
-        "phpcs": [
-            "./vendor/bin/phpcs"
-        ]
+        "test": "phpunit tests",
+        "phpcs": "./vendor/bin/phpcs"
+    },
+    "autoload": {
+        "psr-4": {
+            "Projects\\lvl2\\": "tests"
+        }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "*"
     }
 }
