@@ -21,6 +21,9 @@
             "Projects\\lvl2\\": "tests"
         }
     },
+    "require": {
+        "docopt/docopt": "^1.0"
+    },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
         "phpunit/phpunit": "*"
