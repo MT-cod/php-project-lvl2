@@ -1,4 +1,3 @@
-### Hexlet tests and linter status:
 [![Actions Status](https://github.com/MT-cod/php-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/MT-cod/php-project-lvl2/actions)
 <br>
 [![Code Climate](https://codeclimate.com/github/MT-cod/php-project-lvl2/badges/gpa.svg)](https://codeclimate.com/github/MT-cod/php-project-lvl2)
