@@ -18,7 +18,7 @@
 
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">../bin</directory>
+            <directory>../bin</directory>
         </include>
     </coverage>
 </phpunit>
