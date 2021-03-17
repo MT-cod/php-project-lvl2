@@ -6,6 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class GenDiffTest extends TestCase
 {
+    /**
+     * @coversNothing
+     */
+
     public $rightResult;
     public $runDiffResult;
 
