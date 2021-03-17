@@ -2,7 +2,6 @@
 
 namespace Projects\lvl2;
 
-
 use PHPUnit\Framework\TestCase;
 
 class GenDiffTest extends TestCase
