@@ -21,7 +21,7 @@ class GenDiffTest extends TestCase
 }
 ';
         $this->runDiffResult = shell_exec(
-            __DIR__ . '/../bin/gendiff ' . __DIR__ . '/fixtures/file1.json ' . __DIR__ . '/fixtures/file2.json'
+            '/home/runner/work/php-project-lvl2/php-project-lvl2/bin/gendiff ' . __DIR__ . '/fixtures/file1.json ' . __DIR__ . '/fixtures/file2.json'
         );
         $this->assertEquals($this->rightResult, $this->runDiffResult);
     }
