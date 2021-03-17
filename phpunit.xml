@@ -16,9 +16,9 @@
         </testsuite>
     </testsuites>
 
-    <coverage includeUncoveredFiles="true">
+    <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">bin</directory>
+            <directory suffix=".php">../bin</directory>
         </include>
     </coverage>
 </phpunit>
