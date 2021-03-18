@@ -10,7 +10,7 @@ class GenDiffTest extends TestCase
     public $runDiffResult;
 
     /**
-     * @covers genDiff
+     * @covers GenDiffTest::testGenDiff
      */
     public function testGenDiff()
     {
