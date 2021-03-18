@@ -6,13 +6,12 @@ use PHPUnit\Framework\TestCase;
 
 class GenDiffTest extends TestCase
 {
-    /**
-     * @coversNothing
-     */
-
     public $rightResult;
     public $runDiffResult;
 
+    /**
+     * @covers genDiff
+     */
     public function testGenDiff()
     {
         $this->rightResult = '{
