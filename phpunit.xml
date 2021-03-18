@@ -5,9 +5,4 @@
             <directory suffix="">./bin</directory>
         </include>
     </coverage>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix="">./bin</directory>
-        </whitelist>
-    </filter>
 </phpunit>
