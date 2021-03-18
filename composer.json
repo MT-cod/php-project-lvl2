@@ -19,7 +19,10 @@
     "autoload": {
         "psr-4": {
             "Projects\\lvl2\\": "tests"
-        }
+        },
+        "files": [
+            "src/genDiff.php"
+        ]
     },
     "require": {
         "docopt/docopt": "^1.0"
