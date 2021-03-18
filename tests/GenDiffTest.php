@@ -9,10 +9,7 @@ class GenDiffTest extends TestCase
     public $rightResult;
     public $runDiffResult;
 
-    /**
-     * @covers GenDiffTest::testGenDiff
-     */
-    public function testGenDiff()
+    public function testGenDiff(): void
     {
         $this->rightResult = '{
 - follow: false
