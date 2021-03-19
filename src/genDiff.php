@@ -5,15 +5,9 @@ namespace Projects\lvl2;
 //Основные функции>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function genDiff(\Docopt\Response $args): string
 {
-    $arr1 = getAssocArrayFromFiles($args['<firstFile>']);
-    $arr2 = getAssocArrayFromFiles($args['<secondFile>']);
+    $arr1 = getAssocArrayFromFile($args['<firstFile>']);
+    $arr2 = getAssocArrayFromFile($args['<secondFile>']);
     return genDiffFromArrays($arr1, $arr2);
-}
-
-//Возвращаем ассоциативный массив из переданного json-а
-function getAssocArrayFromFiles(string $file): array
-{
-    return json_decode(file_get_contents($file), true);
 }
 
 //Возвращаем строку отличий 2-ух массивов

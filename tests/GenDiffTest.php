@@ -7,7 +7,8 @@ use PHPUnit\Framework\TestCase;
 class GenDiffTest extends TestCase
 {
     public $rightResult;
-    public $runDiffResult;
+    public $TestDiffResultJson;
+    public $TestDiffResultYaml;
 
     public function testGenDiff(): void
     {
@@ -20,9 +21,13 @@ class GenDiffTest extends TestCase
 + verbose: true
 }
 ';
-        $this->runDiffResult = shell_exec(
+        $this->TestDiffResultJson = shell_exec(
             'php ' . __DIR__ . '/../bin/gendiff ' . __DIR__ . '/fixtures/file1.json ' . __DIR__ . '/fixtures/file2.json'
         );
-        $this->assertEquals($this->rightResult, $this->runDiffResult);
+        $this->assertEquals($this->rightResult, $this->TestDiffResultJson);
+        $this->TestDiffResultYaml = shell_exec(
+            'php ' . __DIR__ . '/../bin/gendiff ' . __DIR__ . '/fixtures/file1.yaml ' . __DIR__ . '/fixtures/file2.yaml'
+        );
+        $this->assertEquals($this->rightResult, $this->TestDiffResultYaml);
     }
 }
