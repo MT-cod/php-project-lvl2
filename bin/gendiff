@@ -25,6 +25,6 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$args = \Docopt::handle($doc, array('version'=>'v0.0.6'));
+$args = \Docopt::handle($doc, array('version'=>'v0.5'));
 
 echo(genDiff($args));
