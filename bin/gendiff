@@ -27,4 +27,7 @@ DOCOPT;
 
 $args = \Docopt::handle($doc, array('version'=>'v0.5'));
 
+/*foreach ($args as $k=>$v)
+    echo $k.': '.json_encode($v).PHP_EOL;*/
+
 echo(genDiff($args));

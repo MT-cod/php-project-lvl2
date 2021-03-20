@@ -2,7 +2,7 @@
 
 namespace Projects\lvl2;
 
-//Возвращаем ассоциативный массив из переданного файла
+//Возвращаем ассоциативный массив из переданного файла определённого формата
 function getAssocArrayFromFile(string $path): mixed
 {
     $format_of_file = checkFormatOfFile($path);

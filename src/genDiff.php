@@ -7,28 +7,42 @@ function genDiff(\Docopt\Response $args): string
 {
     $arr1 = getAssocArrayFromFile($args['<firstFile>']);
     $arr2 = getAssocArrayFromFile($args['<secondFile>']);
-    return genDiffFromArrays($arr1, $arr2);
+
+
+    $mergedAndSortedArrs = array_merge($arr1, $arr2);
+    ksort($mergedAndSortedArrs);
+
+    $resultArray = genDiffFromArrays($mergedAndSortedArrs, $arr1, $arr2);
+    return resultArrayToResultString($resultArray);
 }
 
-//Возвращаем строку отличий 2-ух массивов
-function genDiffFromArrays(array $arr1, array $arr2): string
+//Возвращаем результирующий массив отличий 2-ух массивов
+function genDiffFromArrays(array $mergedAndSortedArrs, array $arr1, array $arr2): array
 {
-    $merged = array_merge($arr1, $arr2);
-    ksort($merged);
-    $res = "{\n";
-    foreach ($merged as $key => $item) {
+    $res = [];
+    foreach ($mergedAndSortedArrs as $key => $item) {
         if (!key_exists($key, $arr1) && key_exists($key, $arr2)) {
-            $res .=  "+ $key: " . ifBoolToString($item) . "\n";
+            $res["+ $key"] =  $item;
         } elseif (key_exists($key, $arr1) && !key_exists($key, $arr2)) {
-            $res .=  "- $key: " . ifBoolToString($item) . "\n";
+            $res["- $key"] =  $item;
         } else {
             if ($arr1[$key] === $arr2[$key]) {
-                $res .=  "  $key: " . ifBoolToString($item) . "\n";
+                $res["  $key"] =  $item;
             } else {
-                $res .=  "- $key: " . ifBoolToString($arr1[$key]) . "\n";
-                $res .=  "+ $key: " . ifBoolToString($arr2[$key]) . "\n";
+                $res["- $key"] =  $arr1[$key];
+                $res["+ $key"] =  $arr2[$key];
             }
         }
+    }
+    return $res;
+}
+
+//Возвращаем результат в строчном виде
+function resultArrayToResultString(array $resultArray): string
+{
+    $res = "{\n";
+    foreach ($resultArray as $key => $value) {
+        $res .=  "$key: " . ifBoolToString($value) . "\n";
     }
     $res .= "}\n";
     return $res;
