@@ -20,8 +20,11 @@
             "Projects\\lvl2\\": "tests"
         },
         "files": [
-            "src/genDiff.php",
-            "src/parsers.php"
+            "src/GenDiff.php",
+            "src/Parsers.php",
+            "src/Formatters.php",
+            "src/FormatStylish.php",
+            "src/FormatPlain.php"
         ]
     },
     "require": {

@@ -10,7 +10,7 @@ function genDiff(\Docopt\Response $args): string
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
 
-    return resultArrayToResultString($resultArray);
+    return resultArrayToResultString($resultArray, $args['<fmt>']);
 }
 
 //Возвращаем результирующий массив отличий 2-ух массивов
@@ -68,24 +68,7 @@ function ifItemIsArrThenMapKeys(mixed $item, array $res = []): mixed
     }
 }
 
-//Возвращаем результат в строчном виде
-function resultArrayToResultString(array $resultArray): string
-{
-    $res = json_encode($resultArray, JSON_PRETTY_PRINT);
-    $res = preg_filter("/  \"|\"|\,/", '', $res);
-/*    foreach ($resultArray as $key => $value) {
-        if (!is_array($value)) {
-            $res .=  "$spacing$key: " . ifBoolOr0ToString($value) . "\n";
-        } else {
-            //Если значение по ключу вложенный массив, то проходимся по этому массиву
-            //этой же функцией для приведения к строчному виду
-            $res .= "$spacing$key: {\n" . resultArrayToResultString($value, $spacing = $spacing . "  ");
-            $res .= "$spacing}\n";
-            $spacing = substr_replace($spacing, "  ", 0);
-        }
-    }*/
-    return $res;
-}
+
 
 //Проверяем, если значение булево или ноль, то возвращаем его эквивалент в строке
 /*function ifBoolOr0ToString(mixed $value): mixed
