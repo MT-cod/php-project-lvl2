@@ -10,3 +10,5 @@
 <br>
 <a href="https://asciinema.org/a/JY3Wz4d0U1FKWPs4edWREFnSg">Сравнение плоских файлов (yaml) - asciinema</a>
 <br>
+<a href="https://asciinema.org/a/Kv81V5RZsYLDOpfzaL5TpCKn1">Рекурсивное сравнение - asciinema</a>
+<br>
