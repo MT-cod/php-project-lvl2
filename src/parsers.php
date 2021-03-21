@@ -17,7 +17,7 @@ function getAssocArrayFromFile(string $path): mixed
 }
 
 //Определяем формат переданного файла по его расширению
-function checkFormatOfFile($path)
+function checkFormatOfFile(string $path): string
 {
     $path_info = pathinfo($path);
     return $path_info['extension'];
