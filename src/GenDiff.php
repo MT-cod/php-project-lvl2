@@ -2,45 +2,50 @@
 
 namespace Projects\lvl2;
 
-//Основные функции>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Головная функция дифа
 function genDiff(\Docopt\Response $args): string
 {
     $arr1 = getAssocArrayFromFile($args['<firstFile>']);
+    //print_r($arr1);
     $arr2 = getAssocArrayFromFile($args['<secondFile>']);
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
 
-    return resultArrayToResultString($resultArray, $args['<fmt>']);
+    //['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у
+    return resultArrayToResultString($resultArray, $args['--format'][0]);
 }
 
 //Возвращаем результирующий массив отличий 2-ух массивов
 function genDiffFromArrays(array $arr1, array $arr2): array
 {
     $mergedAndSortedArrs = mergeAndSortArrs($arr1, $arr2);
-    $res = [];
+    $diffResult = [];
+
+    //Помечаем ключи значений "+ ", "- " или "  " для маркировки отличий в переданных массивах
     foreach ($mergedAndSortedArrs as $key => $item) {
         if (!key_exists($key, $arr1) && key_exists($key, $arr2)) {
-            $res["+ $key"] = ifItemIsArrThenMapKeys($item);
+            $diffResult["+ $key"] = ifItemIsArrThenMapKeys($item);
         } elseif (key_exists($key, $arr1) && !key_exists($key, $arr2)) {
-            $res["- $key"] = ifItemIsArrThenMapKeys($item);
+            $diffResult["- $key"] = ifItemIsArrThenMapKeys($item);
         } else {
             if ($arr1[$key] === $arr2[$key]) {
-                $res["  $key"] = ifItemIsArrThenMapKeys($item);
+                $diffResult["  $key"] = ifItemIsArrThenMapKeys($item);
             } else {
                 if (!is_array($item)) {
-                    $res["- $key"] = ifItemIsArrThenMapKeys($arr1[$key]);
-                    $res["+ $key"] = ifItemIsArrThenMapKeys($arr2[$key]);
+                    $diffResult["- $key"] = ifItemIsArrThenMapKeys($arr1[$key]);
+                    $diffResult["+ $key"] = ifItemIsArrThenMapKeys($arr2[$key]);
                 } else {
                     //Если значение по ключу вложенный массив, присутствующий в обоих переданных файлах,
                     //то проходимся по этому массиву этой же функцией для поиска различий
-                    $res["  $key"] = genDiffFromArrays($arr1[$key], $arr2[$key]);
+                    $diffResult["  $key"] = genDiffFromArrays($arr1[$key], $arr2[$key]);
                 }
             }
         }
     }
-    return $res;
+    return $diffResult;
 }
 
+//Мёржим массивы в один и сортируем после мёржа для дальнейшего поиска отличий
 function mergeAndSortArrs(array $arr1, array $arr2): array
 {
     $merged = array_merge($arr1, $arr2);
@@ -48,38 +53,22 @@ function mergeAndSortArrs(array $arr1, array $arr2): array
     return $merged;
 }
 
-//Проверяем, если значение массив, то возвращаем его с помеченными пробелами ключами
+//Проверяем, если значение массив, то возвращаем его с помеченными пробелами "  " ключами
 //(Для значений по которым уже не будут вычисляться различия)
-function ifItemIsArrThenMapKeys(mixed $item, array $res = []): mixed
+function ifItemIsArrThenMapKeys(mixed $item, array $mapResult = []): mixed
 {
     if (is_array($item)) {
         foreach ($item as $key => $val) {
             if (!is_array($val)) {
-                $res["  $key"] = $val;
+                $mapResult["  $key"] = $val;
             } else {
                 //Если значение по ключу вложенный массив, то проходимся по этому массиву
                 //этой же функцией для пометки
-                $res["  $key"] = ifItemIsArrThenMapKeys($val);
+                $mapResult["  $key"] = ifItemIsArrThenMapKeys($val);
             }
         }
-        return $res;
+        return $mapResult;
     } else {
         return $item;
     }
 }
-
-
-
-//Проверяем, если значение булево или ноль, то возвращаем его эквивалент в строке
-/*function ifBoolOr0ToString(mixed $value): mixed
-{
-    if ($value === true) {
-        return 'true';
-    } elseif ($value === false) {
-        return 'false';
-    } elseif ($value === null) {
-        return 'null';
-    } else {
-        return $value;
-    }
-}*/

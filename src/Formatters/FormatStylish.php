@@ -2,9 +2,9 @@
 
 namespace Projects\lvl2;
 
-function plainFormattingOfDiffResult(array $resultArray)
+function stylishFormattingOfDiffResult(array $resultArray): string
 {
-    $res = json_encode($resultArray, JSON_PRETTY_PRINT);
-    $res = preg_filter("/  \"|\"|\,/", '', $res);
-    return $res;
+    $stylishResult = json_encode($resultArray, JSON_PRETTY_PRINT);
+    $stylishResult = preg_filter("/  \"|\"|\,/", '', $stylishResult);
+    return $stylishResult;
 }

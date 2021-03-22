@@ -23,8 +23,8 @@
             "src/GenDiff.php",
             "src/Parsers.php",
             "src/Formatters.php",
-            "src/FormatStylish.php",
-            "src/FormatPlain.php"
+            "src/Formatters/FormatStylish.php",
+            "src/Formatters/FormatPlain.php"
         ]
     },
     "require": {
