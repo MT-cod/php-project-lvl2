@@ -6,11 +6,10 @@ namespace Projects\lvl2;
 function genDiff(\Docopt\Response $args): string
 {
     $arr1 = getAssocArrayFromFile($args['<firstFile>']);
-    //print_r($arr1);
     $arr2 = getAssocArrayFromFile($args['<secondFile>']);
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
-
+    //print_r($resultArray);
     //['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у
     return resultArrayToResultString($resultArray, $args['--format'][0]);
 }

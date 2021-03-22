@@ -1,34 +1,37 @@
 <?php
 
+//Модуль тестирования парсингов
+
 namespace Projects\lvl2;
 
 use PHPUnit\Framework\TestCase;
 
 class ParsersTest extends TestCase
 {
+    public array $ParseJsonTestResult;
+    public array $ParseYamlTestResult;
+
     /**
-     * @covers ::getAssocArrayFromFile
-     * @dataProvider setProv
+     * @dataProvider parseFileRightResult
      */
-    public function testParsingJson($ParseFileRightResult): void
+    public function testParsingJson(string $parseFileRightResult): void
     {
         $this->ParseJsonTestResult = getAssocArrayFromFile(__DIR__ . '/fixtures/file1.json');
-        $this->expectOutputString($ParseFileRightResult);
+        $this->expectOutputString($parseFileRightResult);
         print_r($this->ParseJsonTestResult);
     }
 
     /**
-     * @covers ::getAssocArrayFromFile
-     * @dataProvider setProv
+     * @dataProvider parseFileRightResult
      */
-    public function testParsingYaml($ParseFileRightResult): void
+    public function testParsingYaml(string $parseFileRightResult): void
     {
         $this->ParseYamlTestResult = getAssocArrayFromFile(__DIR__ . '/fixtures/file1.yaml');
-        $this->expectOutputString($ParseFileRightResult);
+        $this->expectOutputString($parseFileRightResult);
         print_r($this->ParseYamlTestResult);
     }
 
-    public function setProv()
+    public function parseFileRightResult(): array
     {
         return [
             ['Array
