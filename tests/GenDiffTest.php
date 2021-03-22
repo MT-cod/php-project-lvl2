@@ -4,7 +4,7 @@ namespace Projects\lvl2;
 
 use PHPUnit\Framework\TestCase;
 
-/*class GenDiffTest extends TestCase
+class GenDiffTest extends TestCase
 {
     public $recursRightResult;
 
@@ -66,4 +66,4 @@ use PHPUnit\Framework\TestCase;
         );
         $this->assertEquals($this->recursRightResult, $this->TestDiffResultRecursYaml);
     }
-}*/
+}
