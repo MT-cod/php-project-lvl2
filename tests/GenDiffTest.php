@@ -8,10 +8,10 @@ use PHPUnit\Framework\TestCase;
 
 class GenDiffTest extends TestCase
 {
-    public array $genDiffTestResult;
+    private array $genDiffTestResult;
 
     /**
-     * @dataProvider genDiffRightResult
+     * @dataProvider rightResultAndEntranceArrs
      */
     public function testGenDiff(string $genDiffRightResult, string $arr1, string $arr2): void
     {
@@ -23,7 +23,7 @@ class GenDiffTest extends TestCase
         print_r($this->genDiffTestResult);
     }
 
-    public function genDiffRightResult()
+    public function rightResultAndEntranceArrs()
     {
         return [
             ['Array

@@ -3,15 +3,14 @@
 namespace Projects\lvl2;
 
 //Головная функция дифа
-function genDiff(\Docopt\Response $args): string
+function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2): string
 {
-    $arr1 = getAssocArrayFromFile($args['<firstFile>']);
-    $arr2 = getAssocArrayFromFile($args['<secondFile>']);
+    $arr1 = getAssocArrayFromFile($pathToFile1);
+    $arr2 = getAssocArrayFromFile($pathToFile2);
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
-    //print_r($resultArray);
-    //['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у
-    return resultArrayToResultString($resultArray, $args['--format'][0]);
+    //echo(json_encode($resultArray, JSON_PRETTY_PRINT));
+    return resultArrayToResultString($resultArray, $outputFormat);
 }
 
 //Возвращаем результирующий массив отличий 2-ух массивов

@@ -25,9 +25,14 @@ Options:
   -f --format <fmt>             Report format [default: stylish]
 DOCOPT;
 
-$args = \Docopt::handle($doc, array('version'=>'v0.6'));
+$startingParams = \Docopt::handle($doc, array('version'=>'v0.6'));
 
-/*foreach ($args as $k=>$v)
+/*foreach ($startingParams as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;*/
 
-echo(genDiff($args));
+$pathToFile1 = $startingParams['<firstFile>'];
+$pathToFile2 = $startingParams['<secondFile>'];
+//['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у
+$outputFormat = $startingParams['--format'][0];
+
+echo(genDiff($outputFormat, $pathToFile1, $pathToFile2));
