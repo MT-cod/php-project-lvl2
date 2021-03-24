@@ -13,7 +13,7 @@ class FormattersTest extends TestCase
     private string $PlainFormatTestResult;
 
     /**
-     * @dataProvider rightResultsAndEntranceArr
+     * @dataProvider rightResults
      */
     public function testFormatOutput(string $rightResultOfStylishFormatOutput, string $rightResultOfPlainFormatOutput)
     {
@@ -23,11 +23,11 @@ class FormattersTest extends TestCase
 
         $this->StylishFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'stylish');
         $this->assertEquals($rightResultOfStylishFormatOutput, $this->StylishFormatTestResult);
-        /*$this->PlainFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'plain');
-        $this->assertEquals($rightResultOfPlainFormatOutput, $this->PlainFormatTestResult);*/
+        $this->PlainFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'plain');
+        $this->assertEquals($rightResultOfPlainFormatOutput, $this->PlainFormatTestResult);
     }
 
-    public function rightResultsAndEntranceArr()
+    public function rightResults()
     {
         return [
             ['{
@@ -73,6 +73,16 @@ class FormattersTest extends TestCase
         }
         fee: 100500
     }
-}', '']];
+}', "Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]"]];
     }
 }
