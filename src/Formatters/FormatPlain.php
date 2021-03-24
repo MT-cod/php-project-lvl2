@@ -35,7 +35,7 @@ function plainFormattingOfDiffResult(array $resultArray, $parents = '', &$plainR
                 }
         }
     }
-    return implode("\n", $plainResultArr);
+    return implode("\n", $plainResultArr) . "\n";
 }
 
 //Проверяем, если значение булево или ноль, то возвращаем его эквивалент в строке
