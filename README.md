@@ -12,3 +12,5 @@
 <br>
 <a href="https://asciinema.org/a/Kv81V5RZsYLDOpfzaL5TpCKn1">Рекурсивное сравнение - asciinema</a>
 <br>
+<a href="https://asciinema.org/a/o3W5gWcVmrGADGQFvkAxLykFG">Рекурсивное сравнение - asciinema</a>
+<br>
