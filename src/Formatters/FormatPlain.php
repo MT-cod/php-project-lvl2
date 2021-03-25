@@ -2,7 +2,7 @@
 
 namespace Projects\lvl2;
 
-function plainFormattingOfDiffResult(array $resultArray, $parents = '', &$plainResultArr = []): string
+function plainFormattingOfDiffResult(array $resultArray, string $parents = '', array &$plainResultArr = []): string
 {
     foreach ($resultArray as $key => $value) {
         $diffCriteria = $key[0];
@@ -47,7 +47,6 @@ function ifBoolOr0ToString(mixed $value): mixed
         return 'false';
     } elseif ($value === null) {
         return 'null';
-    } else {
-        return "'$value'";
     }
+    return "'$value'";
 }

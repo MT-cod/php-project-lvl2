@@ -14,12 +14,10 @@ function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2)
 }
 
 //Возвращаем результирующий массив отличий 2-ух массивов
-function genDiffFromArrays(array $arr1, array $arr2): array
+function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): array
 {
     $mergedAndSortedArrs = mergeAndSortArrs($arr1, $arr2);
-    $diffResult = [];
-
-    //Помечаем ключи значений "+ ", "- " или "  " для маркировки отличий в переданных массивах
+    //Цикл: Помечаем ключи значений "+ ", "- " или "  " для маркировки отличий в переданных массивах
     foreach ($mergedAndSortedArrs as $key => $item) {
         if (!key_exists($key, $arr1) && key_exists($key, $arr2)) {
             $diffResult["+ $key"] = ifItemIsArrThenMapKeys($item);
@@ -33,8 +31,6 @@ function genDiffFromArrays(array $arr1, array $arr2): array
                     $diffResult["- $key"] = ifItemIsArrThenMapKeys($arr1[$key]);
                     $diffResult["+ $key"] = ifItemIsArrThenMapKeys($arr2[$key]);
                 } else {
-                    //Если значение по ключу вложенный массив, присутствующий в обоих переданных файлах,
-                    //то проходимся по этому массиву этой же функцией для поиска различий
                     $diffResult["  $key"] = genDiffFromArrays($arr1[$key], $arr2[$key]);
                 }
             }
@@ -52,21 +48,14 @@ function mergeAndSortArrs(array $arr1, array $arr2): array
 }
 
 //Проверяем, если значение массив, то возвращаем его с помеченными пробелами "  " ключами
-//(Для значений по которым уже не будут вычисляться различия)
+//(Для значений по которым уже не нужно вычислять различия)
 function ifItemIsArrThenMapKeys(mixed $item, array $mapResult = []): mixed
 {
     if (is_array($item)) {
         foreach ($item as $key => $val) {
-            if (!is_array($val)) {
-                $mapResult["  $key"] = $val;
-            } else {
-                //Если значение по ключу вложенный массив, то проходимся по этому массиву
-                //этой же функцией для пометки
-                $mapResult["  $key"] = ifItemIsArrThenMapKeys($val);
-            }
+            $mapResult["  $key"] =  (!is_array($val)) ? $val : ifItemIsArrThenMapKeys($val);
         }
         return $mapResult;
-    } else {
-        return $item;
     }
+    return $item;
 }
