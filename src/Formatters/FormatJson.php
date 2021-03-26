@@ -11,7 +11,7 @@ function jsonFormattingOfDiffResult(array $resultArray, $parents = '', array &$j
             case '+':
                 if (isset($lastDiff) && isset($lastDiff['lastKey']) && $lastDiff['lastKey'] == $keyName) {
                     $lastValue = $lastDiff['lastValue'];
-                    unset($jsonResultArr['deleted'][$parents][$keyName]);
+                    //unset($jsonResultArr['deleted'][$parents][$keyName]);
                     $jsonResultArr['updated'][$parents][$keyName]['old'] = $lastValue;
                     $jsonResultArr['updated'][$parents][$keyName]['new'] = sanitizeSpaces($value);
                 } else {
@@ -31,6 +31,7 @@ function jsonFormattingOfDiffResult(array $resultArray, $parents = '', array &$j
                     jsonFormattingOfDiffResult($value, $parentsForIter, $jsonResultArr);
                 } else {
                     $jsonResultArr['unchanged'][$parents][$keyName] = sanitizeSpaces($value);
+                    $lastDiff = [];
                 }
         }
     }
@@ -38,7 +39,7 @@ function jsonFormattingOfDiffResult(array $resultArray, $parents = '', array &$j
     return json_encode($jsonResultArr, JSON_PRETTY_PRINT) . "\n";
 }
 
-function sanitizeSpaces(mixed $item, array $mapResult = []): mixed
+function sanitizeSpaces(mixed $item, array $sanResult = []): mixed
 {
     if (is_array($item)) {
         foreach ($item as $key => $val) {
