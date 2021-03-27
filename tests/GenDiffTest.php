@@ -30,82 +30,70 @@ class GenDiffTest extends TestCase
 (
     [common] => Array
         (
-            [0] => Array
+            [follow] => Array
                 (
-                    [follow] => Array
+                    [diffStatus] => added
+                    [value] => 
+                )
+
+            [setting1] => Array
+                (
+                    [diffStatus] => unchanged
+                    [value] => Value 1
+                )
+
+            [setting2] => Array
+                (
+                    [diffStatus] => deleted
+                    [value] => 200
+                )
+
+            [setting3] => Array
+                (
+                    [diffStatus] => updated
+                    [oldValue] => 1
+                    [newValue] => 
+                )
+
+            [setting4] => Array
+                (
+                    [diffStatus] => added
+                    [value] => blah blah
+                )
+
+            [setting5] => Array
+                (
+                    [diffStatus] => added
+                    [value] => Array
                         (
-                            [diffStatus] => added
-                            [value] => 
+                            [key5] => value5
                         )
 
-                    [setting1] => Array
+                )
+
+            [setting6] => Array
+                (
+                    [doge] => Array
+                        (
+                            [wow] => Array
+                                (
+                                    [diffStatus] => updated
+                                    [oldValue] => 
+                                    [newValue] => so much
+                                )
+
+                        )
+
+                    [key] => Array
                         (
                             [diffStatus] => unchanged
-                            [value] => Value 1
+                            [value] => value
                         )
 
-                    [setting2] => Array
-                        (
-                            [diffStatus] => deleted
-                            [value] => 200
-                        )
-
-                    [setting3] => Array
-                        (
-                            [diffStatus] => updated
-                            [oldValue] => 1
-                            [newValue] => 
-                        )
-
-                    [setting4] => Array
+                    [ops] => Array
                         (
                             [diffStatus] => added
-                            [value] => blah blah
-                        )
-
-                    [setting5] => Array
-                        (
-                            [diffStatus] => added
-                            [value] => Array
-                                (
-                                    [key5] => value5
-                                )
-
-                        )
-
-                    [setting6] => Array
-                        (
-                            [0] => Array
-                                (
-                                    [doge] => Array
-                                        (
-                                            [0] => Array
-                                                (
-                                                    [wow] => Array
-                                                        (
-                                                            [diffStatus] => updated
-                                                            [oldValue] => 
-                                                            [newValue] => so much
-                                                        )
-
-                                                )
-
-                                        )
-
-                                    [key] => Array
-                                        (
-                                            [diffStatus] => unchanged
-                                            [value] => value
-                                        )
-
-                                    [ops] => Array
-                                        (
-                                            [diffStatus] => added
-                                            [value] => vops
-                                        )
-
-                                )
-
+                            [value] => vops
                         )
 
                 )
@@ -114,32 +102,28 @@ class GenDiffTest extends TestCase
 
     [group1] => Array
         (
-            [0] => Array
+            [baz] => Array
                 (
-                    [baz] => Array
+                    [diffStatus] => updated
+                    [oldValue] => bas
+                    [newValue] => bars
+                )
+
+            [foo] => Array
+                (
+                    [diffStatus] => unchanged
+                    [value] => bar
+                )
+
+            [nest] => Array
+                (
+                    [diffStatus] => updated
+                    [oldValue] => Array
                         (
-                            [diffStatus] => updated
-                            [oldValue] => bas
-                            [newValue] => bars
+                            [key] => value
                         )
 
-                    [foo] => Array
-                        (
-                            [diffStatus] => unchanged
-                            [value] => bar
-                        )
-
-                    [nest] => Array
-                        (
-                            [diffStatus] => updated
-                            [oldValue] => Array
-                                (
-                                    [key] => value
-                                )
-
-                            [newValue] => str
-                        )
-
+                    [newValue] => str
                 )
 
         )

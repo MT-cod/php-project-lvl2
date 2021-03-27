@@ -74,7 +74,8 @@ class FormattersTest extends TestCase
         }
         fee: 100500
     }
-}', "Property 'common.follow' was added with value: false
+}
+', "Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
 Property 'common.setting4' was added with value: 'blah blah'
@@ -86,78 +87,70 @@ Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]
 ", '{
-    "common": [
-        {
-            "follow": {
-                "diffStatus": "added",
-                "value": false
-            },
-            "setting1": {
-                "diffStatus": "unchanged",
-                "value": "Value 1"
-            },
-            "setting2": {
-                "diffStatus": "deleted",
-                "value": 200
-            },
-            "setting3": {
-                "diffStatus": "updated",
-                "oldValue": true,
-                "newValue": null
-            },
-            "setting4": {
-                "diffStatus": "added",
-                "value": "blah blah"
-            },
-            "setting5": {
-                "diffStatus": "added",
-                "value": {
-                    "key5": "value5"
+    "common": {
+        "follow": {
+            "diffStatus": "added",
+            "value": false
+        },
+        "setting1": {
+            "diffStatus": "unchanged",
+            "value": "Value 1"
+        },
+        "setting2": {
+            "diffStatus": "deleted",
+            "value": 200
+        },
+        "setting3": {
+            "diffStatus": "updated",
+            "oldValue": true,
+            "newValue": null
+        },
+        "setting4": {
+            "diffStatus": "added",
+            "value": "blah blah"
+        },
+        "setting5": {
+            "diffStatus": "added",
+            "value": {
+                "key5": "value5"
+            }
+        },
+        "setting6": {
+            "doge": {
+                "wow": {
+                    "diffStatus": "updated",
+                    "oldValue": "",
+                    "newValue": "so much"
                 }
             },
-            "setting6": [
-                {
-                    "doge": [
-                        {
-                            "wow": {
-                                "diffStatus": "updated",
-                                "oldValue": "",
-                                "newValue": "so much"
-                            }
-                        }
-                    ],
-                    "key": {
-                        "diffStatus": "unchanged",
-                        "value": "value"
-                    },
-                    "ops": {
-                        "diffStatus": "added",
-                        "value": "vops"
-                    }
-                }
-            ]
-        }
-    ],
-    "group1": [
-        {
-            "baz": {
-                "diffStatus": "updated",
-                "oldValue": "bas",
-                "newValue": "bars"
-            },
-            "foo": {
+            "key": {
                 "diffStatus": "unchanged",
-                "value": "bar"
+                "value": "value"
             },
-            "nest": {
-                "diffStatus": "updated",
-                "oldValue": {
-                    "key": "value"
-                },
-                "newValue": "str"
+            "ops": {
+                "diffStatus": "added",
+                "value": "vops"
             }
         }
-    ],
+    },
+    "group1": {
+        "baz": {
+            "diffStatus": "updated",
+            "oldValue": "bas",
+            "newValue": "bars"
+        },
+        "foo": {
+            "diffStatus": "unchanged",
+            "value": "bar"
+        },
+        "nest": {
+            "diffStatus": "updated",
+            "oldValue": {
+                "key": "value"
+            },
+            "newValue": "str"
+        }
+    },
     "group2": {
         "diffStatus": "deleted",
         "value": {
@@ -178,6 +171,7 @@ Property 'group3' was added with value: [complex value]
             "fee": 100500
         }
     }
-}']];
+}
+']];
     }
 }

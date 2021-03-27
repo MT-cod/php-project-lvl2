@@ -9,6 +9,7 @@ function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2)
     $arr2 = getAssocArrayFromFile($pathToFile2);
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
+    //print_r($resultArray);
     //echo(json_encode($resultArray, JSON_PRETTY_PRINT));
     return resultArrayToResultString($resultArray, $outputFormat);
 }
@@ -28,7 +29,7 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
                 $diffResult[$key] = ['diffStatus' => 'unchanged', 'value' => $item];
             } else {
                 if (is_array($arr1[$key]) && is_array($arr2[$key])) {
-                    $diffResult[$key][] = genDiffFromArrays($arr1[$key], $arr2[$key]);
+                    $diffResult[$key] = genDiffFromArrays($arr1[$key], $arr2[$key]);
                 } else {
                     $diffResult[$key] = [
                         'diffStatus' => 'updated', 'oldValue' => $arr1[$key], 'newValue' => $arr2[$key]
