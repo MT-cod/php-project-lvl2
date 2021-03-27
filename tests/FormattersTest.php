@@ -15,11 +15,12 @@ class FormattersTest extends TestCase
     /**
      * @dataProvider rightResults
      */
-    public function testFormatOutput(string $rightResultOfStylishFormatOutput, string $rightResultOfPlainFormatOutput)
-    {
-        $this->genDiffResultArr = json_decode(file_get_contents(
-            __DIR__ . '/fixtures/genDiffResultArr.json'
-        ), true);
+    public function testFormatOutput(
+        string $rightResultOfStylishFormatOutput,
+        string $rightResultOfPlainFormatOutput,
+        string $genDiffRightResultInJson
+    ) {
+        $this->genDiffResultArr = json_decode($genDiffRightResultInJson, true);
 
         $this->StylishFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'stylish');
         $this->assertEquals($rightResultOfStylishFormatOutput, $this->StylishFormatTestResult);
@@ -84,6 +85,99 @@ Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
 Property 'group3' was added with value: [complex value]
-"]];
+", '{
+    "common": [
+        {
+            "follow": {
+                "diffStatus": "added",
+                "value": false
+            },
+            "setting1": {
+                "diffStatus": "unchanged",
+                "value": "Value 1"
+            },
+            "setting2": {
+                "diffStatus": "deleted",
+                "value": 200
+            },
+            "setting3": {
+                "diffStatus": "updated",
+                "oldValue": true,
+                "newValue": null
+            },
+            "setting4": {
+                "diffStatus": "added",
+                "value": "blah blah"
+            },
+            "setting5": {
+                "diffStatus": "added",
+                "value": {
+                    "key5": "value5"
+                }
+            },
+            "setting6": [
+                {
+                    "doge": [
+                        {
+                            "wow": {
+                                "diffStatus": "updated",
+                                "oldValue": "",
+                                "newValue": "so much"
+                            }
+                        }
+                    ],
+                    "key": {
+                        "diffStatus": "unchanged",
+                        "value": "value"
+                    },
+                    "ops": {
+                        "diffStatus": "added",
+                        "value": "vops"
+                    }
+                }
+            ]
+        }
+    ],
+    "group1": [
+        {
+            "baz": {
+                "diffStatus": "updated",
+                "oldValue": "bas",
+                "newValue": "bars"
+            },
+            "foo": {
+                "diffStatus": "unchanged",
+                "value": "bar"
+            },
+            "nest": {
+                "diffStatus": "updated",
+                "oldValue": {
+                    "key": "value"
+                },
+                "newValue": "str"
+            }
+        }
+    ],
+    "group2": {
+        "diffStatus": "deleted",
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        }
+    },
+    "group3": {
+        "diffStatus": "added",
+        "value": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        }
+    }
+}']];
     }
 }

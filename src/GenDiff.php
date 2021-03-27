@@ -16,26 +16,28 @@ function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2)
 //Возвращаем результирующий массив отличий 2-ух массивов
 function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): array
 {
-    $mergedAndSortedArrs = mergeAndSortArrs($arr1, $arr2);
-    //Цикл: Помечаем ключи значений "+ ", "- " или "  " для маркировки отличий в переданных массивах
-    foreach ($mergedAndSortedArrs as $key => $item) {
+    $mergedAndSortedArrays = mergeAndSortArrs($arr1, $arr2);
+
+    foreach ($mergedAndSortedArrays as $key => $item) {
         if (!key_exists($key, $arr1) && key_exists($key, $arr2)) {
-            $diffResult["+ $key"] = ifItemIsArrThenMapKeys($item);
+            $diffResult[$key] = ['diffStatus' => 'added', 'value' => $item];
         } elseif (key_exists($key, $arr1) && !key_exists($key, $arr2)) {
-            $diffResult["- $key"] = ifItemIsArrThenMapKeys($item);
+            $diffResult[$key] = ['diffStatus' => 'deleted', 'value' => $item];
         } else {
             if ($arr1[$key] === $arr2[$key]) {
-                $diffResult["  $key"] = ifItemIsArrThenMapKeys($item);
+                $diffResult[$key] = ['diffStatus' => 'unchanged', 'value' => $item];
             } else {
-                if (!is_array($item)) {
-                    $diffResult["- $key"] = ifItemIsArrThenMapKeys($arr1[$key]);
-                    $diffResult["+ $key"] = ifItemIsArrThenMapKeys($arr2[$key]);
+                if (is_array($arr1[$key]) && is_array($arr2[$key])) {
+                    $diffResult[$key][] = genDiffFromArrays($arr1[$key], $arr2[$key]);
                 } else {
-                    $diffResult["  $key"] = genDiffFromArrays($arr1[$key], $arr2[$key]);
+                    $diffResult[$key] = [
+                        'diffStatus' => 'updated', 'oldValue' => $arr1[$key], 'newValue' => $arr2[$key]
+                    ];
                 }
             }
         }
     }
+    ksort($diffResult);
     return $diffResult;
 }
 

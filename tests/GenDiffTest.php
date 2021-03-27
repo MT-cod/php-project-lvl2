@@ -28,68 +28,154 @@ class GenDiffTest extends TestCase
         return [
             ['Array
 (
-    [  common] => Array
+    [common] => Array
         (
-            [+ follow] => 
-            [  setting1] => Value 1
-            [- setting2] => 200
-            [- setting3] => 1
-            [+ setting3] => 
-            [+ setting4] => blah blah
-            [+ setting5] => Array
+            [0] => Array
                 (
-                    [  key5] => value5
-                )
-
-            [  setting6] => Array
-                (
-                    [  doge] => Array
+                    [follow] => Array
                         (
-                            [- wow] => 
-                            [+ wow] => so much
+                            [diffStatus] => added
+                            [value] => 
                         )
 
-                    [  key] => value
-                    [+ ops] => vops
-                )
-
-        )
-
-    [  group1] => Array
-        (
-            [- baz] => bas
-            [+ baz] => bars
-            [  foo] => bar
-            [- nest] => Array
-                (
-                    [  key] => value
-                )
-
-            [+ nest] => str
-        )
-
-    [- group2] => Array
-        (
-            [  abc] => 12345
-            [  deep] => Array
-                (
-                    [  id] => 45
-                )
-
-        )
-
-    [+ group3] => Array
-        (
-            [  deep] => Array
-                (
-                    [  id] => Array
+                    [setting1] => Array
                         (
-                            [  number] => 45
+                            [diffStatus] => unchanged
+                            [value] => Value 1
+                        )
+
+                    [setting2] => Array
+                        (
+                            [diffStatus] => deleted
+                            [value] => 200
+                        )
+
+                    [setting3] => Array
+                        (
+                            [diffStatus] => updated
+                            [oldValue] => 1
+                            [newValue] => 
+                        )
+
+                    [setting4] => Array
+                        (
+                            [diffStatus] => added
+                            [value] => blah blah
+                        )
+
+                    [setting5] => Array
+                        (
+                            [diffStatus] => added
+                            [value] => Array
+                                (
+                                    [key5] => value5
+                                )
+
+                        )
+
+                    [setting6] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [doge] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [wow] => Array
+                                                        (
+                                                            [diffStatus] => updated
+                                                            [oldValue] => 
+                                                            [newValue] => so much
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [key] => Array
+                                        (
+                                            [diffStatus] => unchanged
+                                            [value] => value
+                                        )
+
+                                    [ops] => Array
+                                        (
+                                            [diffStatus] => added
+                                            [value] => vops
+                                        )
+
+                                )
+
                         )
 
                 )
 
-            [  fee] => 100500
+        )
+
+    [group1] => Array
+        (
+            [0] => Array
+                (
+                    [baz] => Array
+                        (
+                            [diffStatus] => updated
+                            [oldValue] => bas
+                            [newValue] => bars
+                        )
+
+                    [foo] => Array
+                        (
+                            [diffStatus] => unchanged
+                            [value] => bar
+                        )
+
+                    [nest] => Array
+                        (
+                            [diffStatus] => updated
+                            [oldValue] => Array
+                                (
+                                    [key] => value
+                                )
+
+                            [newValue] => str
+                        )
+
+                )
+
+        )
+
+    [group2] => Array
+        (
+            [diffStatus] => deleted
+            [value] => Array
+                (
+                    [abc] => 12345
+                    [deep] => Array
+                        (
+                            [id] => 45
+                        )
+
+                )
+
+        )
+
+    [group3] => Array
+        (
+            [diffStatus] => added
+            [value] => Array
+                (
+                    [deep] => Array
+                        (
+                            [id] => Array
+                                (
+                                    [number] => 45
+                                )
+
+                        )
+
+                    [fee] => 100500
+                )
+
         )
 
 )
