@@ -21,14 +21,14 @@ function jsonFormattingOfDiffResult(array $resultArray, $parents = '', array &$j
                 break;
             case '-':
                 $jsonResultArr['deleted'][$parents][$keyName] = sanitizeSpaces($value);
-                $lastDiff['lastKey'] = $keyName;
+                $lastDiff['lastKey'] = "$parents$keyName";
                 $lastDiff['lastValue'] = sanitizeSpaces($value);
                 break;
             case ' ':
                 if (is_array($value)) {//Вложенка - на рекурсию
-                    $parentsForIter = $keyName;
+                    $parentsForIter = "$parents$keyName.";
                     $lastDiff = [];
-                    jsonFormattingOfDiffResult($value, $parentsForIter, $jsonResultArr);
+                    jsonFormattingOfDiffResult($value, $parentsForIteration, $jsonResultArr);
                 } else {
                     $jsonResultArr['unchanged'][$parents][$keyName] = sanitizeSpaces($value);
                     $lastDiff = [];
