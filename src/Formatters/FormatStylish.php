@@ -2,7 +2,13 @@
 
 namespace Projects\lvl2;
 
-function stylishFormattingOfDiffResult(array $resultArray, array $stylishResult = []): array
+function stylishFormattingOfDiffResult(array $resultArray): string
+{
+    $stylishResultArray = json_encode(stylishMapping($resultArray), JSON_PRETTY_PRINT) . "\n";
+    return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
+}
+
+function stylishMapping(array $resultArray, array $stylishResult = []): array
 {
     foreach ($resultArray as $key => $item) {
         if (array_key_exists('diffStatus', $item)) {
@@ -21,19 +27,19 @@ function stylishFormattingOfDiffResult(array $resultArray, array $stylishResult 
                     $stylishResult["  $key"] = addSpacesIfValIsArr($item['value']);
             }
         } else {
-            $stylishResult["  $key"] = stylishFormattingOfDiffResult($item);
+            $stylishResult["  $key"] = stylishMapping($item);
         }
     }
     return $stylishResult;
 }
 
-function addSpacesIfValIsArr(mixed $item, array $spacesResult = []): mixed
+function addSpacesIfValIsArr(mixed $item, array $spacedResult = []): mixed
 {
     if (is_array($item)) {
         foreach ($item as $key => $val) {
-            $spacesResult["  $key"] = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
+            $spacedResult["  $key"] = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
         }
-        return $spacesResult;
+        return $spacedResult;
     }
     return $item;
 }

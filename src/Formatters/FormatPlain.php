@@ -8,19 +8,15 @@ function plainFormattingOfDiffResult(array $resultArray, string $parents = '', a
         if (array_key_exists('diffStatus', $item)) {
             switch ($item['diffStatus']) {
                 case 'updated':
-                    $oldValue = (is_array($item['oldValue'])) ? '[complex value]' : ifBoolOr0ToString(
-                        $item['oldValue']
-                    );
-                    $newValue = (is_array($item['newValue'])) ? '[complex value]' : ifBoolOr0ToString(
-                        $item['newValue']
-                    );
+                    $oldValue = simplOrCompVal($item['oldValue']);
+                    $newValue = simplOrCompVal($item['newValue']);
                     $plainResultArr[] = "Property '$parents$key' was updated. From $oldValue to $newValue";
                     break;
                 case 'deleted':
                     $plainResultArr[] = "Property '$parents$key' was removed";
                     break;
                 case 'added':
-                    $value = (is_array($item['value'])) ? '[complex value]' : ifBoolOr0ToString($item['value']);
+                    $value = simplOrCompVal($item['value']);
                     $plainResultArr[] = "Property '$parents$key' was added with value: $value";
             }
         } else {
@@ -29,6 +25,11 @@ function plainFormattingOfDiffResult(array $resultArray, string $parents = '', a
         }
     }
     return implode("\n", $plainResultArr) . "\n";
+}
+
+function simplOrCompVal(mixed $value): mixed
+{
+    return (is_array($value)) ? '[complex value]' : ifBoolOr0ToString($value);
 }
 
 function ifBoolOr0ToString(mixed $value): mixed

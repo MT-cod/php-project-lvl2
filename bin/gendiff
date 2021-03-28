@@ -25,7 +25,7 @@ Options:
   -f --format <fmt>             Report format [default: stylish]
 DOCOPT;
 
-$startingParams = \Docopt::handle($doc, array('version'=>'v0.7'));
+$startingParams = \Docopt::handle($doc, array('version'=>'v0.8'));
 
 /*foreach ($startingParams as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;*/

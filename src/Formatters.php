@@ -6,8 +6,7 @@ function resultArrayToResultString(array $resultArray, string $format): string
 {
     switch ($format) {
         case 'stylish':
-            $resultArray =  json_encode(stylishFormattingOfDiffResult($resultArray), JSON_PRETTY_PRINT) . "\n";
-            return preg_filter("/  \"|\"|\,/", '', $resultArray);
+            return stylishFormattingOfDiffResult($resultArray);
         case 'plain':
             return plainFormattingOfDiffResult($resultArray);
         case 'json':
