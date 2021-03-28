@@ -24,7 +24,7 @@ function plainFormattingOfDiffResult(array $resultArray, string $parents = '', a
             plainFormattingOfDiffResult($item, $parentsForIter, $plainResultArr);
         }
     });
-    return implode("\n", $plainResultArr) . "\n";
+    return implode("\n", $plainResultArr);
 }
 
 function simplOrCompVal(mixed $value): mixed

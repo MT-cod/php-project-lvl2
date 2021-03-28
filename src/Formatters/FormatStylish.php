@@ -4,7 +4,7 @@ namespace Differ\Differ;
 
 function stylishFormattingOfDiffResult(array $resultArray): string
 {
-    $stylishResultArray = json_encode(stylishMapping($resultArray), JSON_PRETTY_PRINT) . "\n";
+    $stylishResultArray = json_encode(stylishMapping($resultArray), JSON_PRETTY_PRINT);
     return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
 }
 
