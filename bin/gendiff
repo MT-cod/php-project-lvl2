@@ -32,4 +32,4 @@ $pathToFile2 = $startingParams['<secondFile>'];
 //['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у
 $outputFormat = $startingParams['--format'][0];
 
-echo(genDiff($outputFormat, $pathToFile1, $pathToFile2));
+echo(genDiff($pathToFile1, $pathToFile2, $outputFormat));
