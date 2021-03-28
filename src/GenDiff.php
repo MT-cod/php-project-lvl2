@@ -3,7 +3,7 @@
 namespace Differ\Differ;
 
 //Головная функция дифа
-function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat = 'stylish'): string
 {
     $arr1 = getAssocArrayFromFile($pathToFile1);
     $arr2 = getAssocArrayFromFile($pathToFile2);
