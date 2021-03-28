@@ -4,7 +4,7 @@ namespace Projects\lvl2;
 
 function plainFormattingOfDiffResult(array $resultArray, string $parents = '', array &$plainResultArr = []): string
 {
-    foreach ($resultArray as $key => $item) {
+    array_walk($resultArray, function ($item, $key) use ($parents, &$plainResultArr) {
         if (array_key_exists('diffStatus', $item)) {
             switch ($item['diffStatus']) {
                 case 'updated':
@@ -23,7 +23,7 @@ function plainFormattingOfDiffResult(array $resultArray, string $parents = '', a
             $parentsForIter = "$parents$key.";
             plainFormattingOfDiffResult($item, $parentsForIter, $plainResultArr);
         }
-    }
+    });
     return implode("\n", $plainResultArr) . "\n";
 }
 

@@ -9,8 +9,7 @@ function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2)
     $arr2 = getAssocArrayFromFile($pathToFile2);
 
     $resultArray = genDiffFromArrays($arr1, $arr2);
-    //print_r($resultArray);
-    //echo(json_encode($resultArray, JSON_PRETTY_PRINT));
+
     return resultArrayToResultString($resultArray, $outputFormat);
 }
 
@@ -18,8 +17,7 @@ function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2)
 function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): array
 {
     $mergedAndSortedArrays = mergeAndSortArrs($arr1, $arr2);
-
-    foreach ($mergedAndSortedArrays as $key => $item) {
+    array_walk($mergedAndSortedArrays, function ($item, $key) use (&$diffResult, $arr1, $arr2) {
         if (!key_exists($key, $arr1) && key_exists($key, $arr2)) {
             $diffResult[$key] = ['diffStatus' => 'added', 'value' => $item];
         } elseif (key_exists($key, $arr1) && !key_exists($key, $arr2)) {
@@ -37,7 +35,7 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
                 }
             }
         }
-    }
+    });
     ksort($diffResult);
     return $diffResult;
 }
@@ -48,17 +46,4 @@ function mergeAndSortArrs(array $arr1, array $arr2): array
     $merged = array_merge($arr1, $arr2);
     ksort($merged);
     return $merged;
-}
-
-//Проверяем, если значение массив, то возвращаем его с помеченными пробелами "  " ключами
-//(Для значений по которым уже не нужно вычислять различия)
-function ifItemIsArrThenMapKeys(mixed $item, array $mapResult = []): mixed
-{
-    if (is_array($item)) {
-        foreach ($item as $key => $val) {
-            $mapResult["  $key"] =  (!is_array($val)) ? $val : ifItemIsArrThenMapKeys($val);
-        }
-        return $mapResult;
-    }
-    return $item;
 }

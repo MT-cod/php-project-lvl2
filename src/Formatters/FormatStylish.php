@@ -10,7 +10,7 @@ function stylishFormattingOfDiffResult(array $resultArray): string
 
 function stylishMapping(array $resultArray, array $stylishResult = []): array
 {
-    foreach ($resultArray as $key => $item) {
+    array_walk($resultArray, function ($item, $key) use (&$stylishResult) {
         if (array_key_exists('diffStatus', $item)) {
             switch ($item['diffStatus']) {
                 case 'updated':
@@ -29,16 +29,16 @@ function stylishMapping(array $resultArray, array $stylishResult = []): array
         } else {
             $stylishResult["  $key"] = stylishMapping($item);
         }
-    }
+    });
     return $stylishResult;
 }
 
 function addSpacesIfValIsArr(mixed $item, array $spacedResult = []): mixed
 {
     if (is_array($item)) {
-        foreach ($item as $key => $val) {
+        array_walk($item, function ($val, $key) use (&$spacedResult) {
             $spacedResult["  $key"] = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
-        }
+        });
         return $spacedResult;
     }
     return $item;
