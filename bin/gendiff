@@ -27,9 +27,6 @@ DOCOPT;
 
 $startingParams = \Docopt::handle($doc, array('version'=>'v1.0.0'));
 
-/*foreach ($startingParams as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;*/
-
 $pathToFile1 = $startingParams['<firstFile>'];
 $pathToFile2 = $startingParams['<secondFile>'];
 //['--format'][0] - ключ значения формата вывода результата работы gendiff по Docopt-у

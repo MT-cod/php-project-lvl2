@@ -1,5 +1,6 @@
 {
-    "name": "mt-cod/php-project-lvl2",
+    "name": "hexlet/code",
+    "version": "v1.0.0",
     "description": "hexlet php-package",
     "license": "MIT",
     "authors": [
