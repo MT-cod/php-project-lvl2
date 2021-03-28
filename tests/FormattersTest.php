@@ -24,11 +24,11 @@ class FormattersTest extends TestCase
     ) {
         $this->genDiffResultArr = json_decode($genDiffRightResultInJson, true);
 
-        $this->stylishFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'stylish');
+        $this->stylishFormatTestResult = stylishFormattingOfDiffResult($this->genDiffResultArr);
         $this->assertEquals($rightResultOfStylishFormatOutput, $this->stylishFormatTestResult);
-        $this->plainFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'plain');
+        $this->plainFormatTestResult = plainFormattingOfDiffResult($this->genDiffResultArr);
         $this->assertEquals($rightResultOfPlainFormatOutput, $this->plainFormatTestResult);
-        $this->jsonFormatTestResult = resultArrayToResultString($this->genDiffResultArr, 'json');
+        $this->jsonFormatTestResult = jsonFormattingOfDiffResult($this->genDiffResultArr);
         $this->assertEquals($rightResultOfJsonFormatOutput, $this->jsonFormatTestResult);
     }
 
