@@ -1,6 +1,6 @@
 <?php
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 function stylishFormattingOfDiffResult(array $resultArray): string
 {

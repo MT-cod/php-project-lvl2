@@ -2,7 +2,7 @@
 
 //Модуль тестирования вычисления отличий 2-ух массивов
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 use PHPUnit\Framework\TestCase;
 

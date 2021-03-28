@@ -1,6 +1,6 @@
 <?php
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 //Возвращаем ассоциативный массив из переданного файла определённого формата
 function getAssocArrayFromFile(string $path): mixed

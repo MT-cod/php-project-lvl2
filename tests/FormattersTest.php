@@ -2,7 +2,7 @@
 
 //Модуль тестирования форматтеров вывода результата работы программы
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 use PHPUnit\Framework\TestCase;
 

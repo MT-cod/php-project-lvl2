@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Projects\\lvl2\\": "tests"
+            "Differ\\Differ\\": "tests"
         },
         "files": [
             "src/GenDiff.php",

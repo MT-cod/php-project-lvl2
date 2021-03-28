@@ -1,6 +1,6 @@
 <?php
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 function plainFormattingOfDiffResult(array $resultArray, string $parents = '', array &$plainResultArr = []): string
 {

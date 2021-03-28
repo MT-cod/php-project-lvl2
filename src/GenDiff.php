@@ -1,6 +1,6 @@
 <?php
 
-namespace Projects\lvl2;
+namespace Differ\Differ;
 
 //Головная функция дифа
 function genDiff(string $outputFormat, string $pathToFile1, string $pathToFile2): string
