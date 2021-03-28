@@ -10,7 +10,9 @@
 <br>
 <a href="https://asciinema.org/a/JY3Wz4d0U1FKWPs4edWREFnSg">Сравнение плоских файлов (yaml) - asciinema</a>
 <br>
-<a href="https://asciinema.org/a/Kv81V5RZsYLDOpfzaL5TpCKn1">Рекурсивное сравнение - asciinema</a>
+<a href="https://asciinema.org/a/Kv81V5RZsYLDOpfzaL5TpCKn1">Stylish формат - asciinema</a>
 <br>
-<a href="https://asciinema.org/a/o3W5gWcVmrGADGQFvkAxLykFG">Рекурсивное сравнение - asciinema</a>
+<a href="https://asciinema.org/a/o3W5gWcVmrGADGQFvkAxLykFG">Плоский формат - asciinema</a>
+<br>
+<a href="https://asciinema.org/a/OS4XBf5ARzSuswo5BYOzQRCk7">Вывод в json - asciinema</a>
 <br>
