@@ -40,6 +40,8 @@ function ifBoolOr0ToString(mixed $value): mixed
         return 'false';
     } elseif ($value === null) {
         return 'null';
+    } elseif ($value === 0) {
+        return (int) 0;
     }
     return "'$value'";
 }
