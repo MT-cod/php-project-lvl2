@@ -33,13 +33,13 @@ function stylishMapping(array $resultArray, array $stylishResult = []): array
     return $stylishResult;
 }
 
-function addSpacesIfValIsArr(mixed $item, array $spacedResult = []): mixed
+function addSpacesIfValIsArr(mixed $item): mixed
 {
     if (is_array($item)) {
-        array_walk($item, function ($val, $key) use (&$spacedResult) {
-            $spacedResult["  $key"] = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
-        });
-        return $spacedResult;
+        return array_reduce(array_keys($item), function ($spacedResult, $key) use ($item) {
+            $spacedResult['  ' . $key] = (is_array($item[$key])) ? addSpacesIfValIsArr($item[$key]) : $item[$key];
+            return $spacedResult;
+        }, []);
     }
     return $item;
 }
