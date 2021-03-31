@@ -36,10 +36,25 @@ function stylishMapping(array $resultDiffArr): array
 function addSpacesIfValIsArr(mixed $item): mixed
 {
     if (is_array($item)) {
+        $result = array_map(function ($key, $val) {
+            $spKey = '  ' . $key;
+            $spacedResult = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
+            return [$spKey => $spacedResult];
+        },
+            array_keys($item),
+            array_values($item));
+        $resultt = array_merge(...$result);
+        return $resultt;
+    }
+    return $item;
+}
+/*function addSpacesIfValIsArr(mixed $item): mixed
+{
+    if (is_array($item)) {
         return array_reduce(array_keys($item), function ($spacedResult, $key) use ($item) {
             $spacedResult['  ' . $key] = (is_array($item[$key])) ? addSpacesIfValIsArr($item[$key]) : $item[$key];
             return $spacedResult;
         }, []);
     }
     return $item;
-}
+}*/
