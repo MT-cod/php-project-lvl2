@@ -37,9 +37,9 @@ function addSpacesIfValIsArr(mixed $item): mixed
 {
     if (is_array($item)) {
         $result = array_map(function ($key, $val) {
-            $spKey = '  ' . $key;
+            //$spKey = '  ' . $key;
             $spacedResult = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
-            return [$spKey => $spacedResult];
+            return ["  $key" => $spacedResult];
         },
             array_keys($item),
             array_values($item));
