@@ -2,51 +2,43 @@
 
 namespace Differ\Differ;
 
-function stylishFormattingOfDiffResult(array $resultArray): string
+function stylishFormattingOfDiffResult(array $resultDiffArr): string
 {
-    $stylishResultArray = json_encode(stylishMapping($resultArray), JSON_PRETTY_PRINT);
+    $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
     return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
 }
 
-function stylishMapping(array $resultArray, array $stylishResult = []): array
+function stylishMapping(array $resultDiffArr): array
 {
-    array_walk($resultArray, function ($item, $key) use (&$stylishResult) {
-        if (array_key_exists('diffStatus', $item)) {
-            switch ($item['diffStatus']) {
+    return array_reduce(array_keys($resultDiffArr), function ($stylishResult, $key) use ($resultDiffArr) {
+        if (array_key_exists('diffStatus', $resultDiffArr[$key])) {
+            switch ($resultDiffArr[$key]['diffStatus']) {
                 case 'updated':
-                    $stylishResult["- $key"] = addSpacesIfValIsArr($item['oldValue']);
-                    $stylishResult["+ $key"] = addSpacesIfValIsArr($item['newValue']);
+                    $stylishResult["- $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['oldValue']);
+                    $stylishResult["+ $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['newValue']);
                     break;
                 case 'deleted':
-                    $stylishResult["- $key"] = addSpacesIfValIsArr($item['value']);
+                    $stylishResult["- $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
                     break;
                 case 'added':
-                    $stylishResult["+ $key"] = addSpacesIfValIsArr($item['value']);
+                    $stylishResult["+ $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
                     break;
                 case 'unchanged':
-                    $stylishResult["  $key"] = addSpacesIfValIsArr($item['value']);
+                    $stylishResult["  $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
             }
         } else {
-            $stylishResult["  $key"] = stylishMapping($item);
+            $stylishResult["  $key"] = stylishMapping($resultDiffArr[$key]);
         }
-    });
-    return $stylishResult;
+        return $stylishResult;
+    }, []);
 }
 
 function addSpacesIfValIsArr(mixed $item): mixed
 {
     if (is_array($item)) {
         return array_reduce(array_keys($item), function ($spacedResult, $key) use ($item) {
-            $spKey = '  ' . $key;
-            $res = $spacedResult;
-            if (is_array($item[$key])) {
-                $resVal = addSpacesIfValIsArr($item[$key]);
-                $res[$spKey] = $resVal;
-            } else {
-                $res[$spKey] = $item[$key];
-            }
-            //$spacedResult = $result;
-            return $res;
+            $spacedResult['  ' . $key] = (is_array($item[$key])) ? addSpacesIfValIsArr($item[$key]) : $item[$key];
+            return $spacedResult;
         }, []);
     }
     return $item;

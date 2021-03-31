@@ -2,9 +2,9 @@
 
 namespace Differ\Differ;
 
-function plainFormattingOfDiffResult(array $resultArray, string $parents = '', array &$plainResultArr = []): string
+function plainFormattingOfDiffResult(array $resultDiffArr, string $parents = '', array &$plainResultArr = []): string
 {
-    array_walk($resultArray, function ($item, $key) use ($parents, &$plainResultArr) {
+    array_walk($resultDiffArr, function ($item, $key) use ($parents, &$plainResultArr) {
         if (array_key_exists('diffStatus', $item)) {
             switch ($item['diffStatus']) {
                 case 'updated':
@@ -41,7 +41,7 @@ function ifBoolOr0ToString(mixed $value): mixed
     } elseif ($value === null) {
         return 'null';
     } elseif ($value === 0) {
-        return (int) 0;
+        return 0;
     }
     return "'$value'";
 }

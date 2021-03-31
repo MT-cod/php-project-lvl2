@@ -8,9 +8,9 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat 
     $arr1 = getAssocArrayFromFile($pathToFile1);
     $arr2 = getAssocArrayFromFile($pathToFile2);
 
-    $resultArray = genDiffFromArrays($arr1, $arr2);
+    $resultDiffArr = genDiffFromArrays($arr1, $arr2);
 //print_r(array_map(fn($a)=>$a, $resultArray));
-    return resultArrayToResultString($resultArray, $outputFormat);
+    return resultArrayToResultString($resultDiffArr, $outputFormat);
 }
 
 //Возвращаем результирующий массив отличий 2-ух массивов

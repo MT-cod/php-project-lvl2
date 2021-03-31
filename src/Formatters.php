@@ -2,15 +2,15 @@
 
 namespace Differ\Differ;
 
-function resultArrayToResultString(array $resultArray, string $format): string
+function resultArrayToResultString(array $resultDiffArr, string $format): string
 {
     switch ($format) {
         case 'stylish':
-            return stylishFormattingOfDiffResult($resultArray);
+            return stylishFormattingOfDiffResult($resultDiffArr);
         case 'plain':
-            return plainFormattingOfDiffResult($resultArray);
+            return plainFormattingOfDiffResult($resultDiffArr);
         case 'json':
-            return jsonFormattingOfDiffResult($resultArray);
+            return jsonFormattingOfDiffResult($resultDiffArr);
         default:
             exit("\nError. Unrecognised type of format ($format).\n");
     }
