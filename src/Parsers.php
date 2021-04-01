@@ -8,11 +8,13 @@ function getAssocArrayFromFile(string $path): mixed
     $formatOfFile = checkFormatOfFile($path);
     switch ($formatOfFile) {
         case 'json':
-            return json_decode(file_get_contents($path), true);
+            $jsonString = file_get_contents($path);
+            if ($jsonString !== false) {
+                return json_decode($jsonString, true);
+            }
+            break;
         case 'yaml':
             return \Symfony\Component\Yaml\Yaml::parseFile($path);
-        default:
-            exit("\nError. Unrecognised type of file ($path).\n");
     }
 }
 

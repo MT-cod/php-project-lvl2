@@ -6,7 +6,7 @@ function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | n
 {
     $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
     if ($stylishResultArray === false) {
-        exit('Stylish encode to json failed');
+        exit("\nStylish encode to json failed.\n");
     }
     return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
 }
