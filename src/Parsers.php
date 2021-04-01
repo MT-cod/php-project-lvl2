@@ -17,11 +17,11 @@ function getAssocArrayFromFile(string $path)
             return \Symfony\Component\Yaml\Yaml::parseFile($path);
     }
     echo("\nFailed to load information from path ($path).\n");
-    exit;
+    return [];
 }
 
 //Определяем формат переданного файла по его расширению
-function checkFormatOfFile(string $path)
+function checkFormatOfFile(string $path): string | null
 {
     return pathinfo($path, PATHINFO_EXTENSION);
 }
