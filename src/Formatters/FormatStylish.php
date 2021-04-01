@@ -5,12 +5,15 @@ namespace Differ\Differ;
 function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | null
 {
     $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
-    return ($stylishResultArray) ? preg_filter("/  \"|\"|\,/", '', $stylishResultArray) : exit('Err');
+    if ($stylishResultArray === false) {
+        exit('Stylish encode to json failed');
+    }
+    return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
 }
 
 function stylishMapping(array $resultDiffArr): array
 {
-    $stylishResult = array_map(function ($nodeKey, $nodeValue): array {
+    $stylishResult = array_map(function (array $nodeKey,array  $nodeValue): mixed {
         if (array_key_exists('diffStatus', $nodeValue)) {
             switch ($nodeValue['diffStatus']) {
                 case 'updated':
