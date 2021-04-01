@@ -2,18 +2,18 @@
 
 namespace Differ\Differ;
 
-function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | null
+function stylishFormattingOfDiffResult(array $resultDiffArr): string
 {
     $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
     if ($stylishResultArray === false) {
-        exit("\nStylish encode to json failed.\n");
+        return "\nStylish encode to json failed.\n";
     }
     return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
 }
 
 function stylishMapping(array $resultDiffArr): array
 {
-    $stylishResult = array_map(function (mixed $nodeKey, mixed $nodeValue): mixed {
+    $stylishResult = array_map(function (mixed $nodeKey, mixed $nodeValue): array | string | null {
         if (array_key_exists('diffStatus', $nodeValue)) {
             switch ($nodeValue['diffStatus']) {
                 case 'updated':
