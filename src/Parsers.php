@@ -3,7 +3,7 @@
 namespace Differ\Differ;
 
 //Возвращаем ассоциативный массив из переданного файла определённого формата
-function getAssocArrayFromFile(string $path)
+function getAssocArrayFromFile(string $path): array
 {
     $formatOfFile = checkFormatOfFile($path);
     switch ($formatOfFile) {
@@ -21,7 +21,7 @@ function getAssocArrayFromFile(string $path)
 }
 
 //Определяем формат переданного файла по его расширению
-function checkFormatOfFile(string $path): string | null
+function checkFormatOfFile(string $path): string
 {
     return pathinfo($path, PATHINFO_EXTENSION);
 }
