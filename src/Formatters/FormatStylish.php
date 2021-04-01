@@ -13,7 +13,7 @@ function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | n
 
 function stylishMapping(array $resultDiffArr): array
 {
-    $stylishResult = array_map(function (array $nodeKey,array  $nodeValue): mixed {
+    $stylishResult = array_map(function (mixed $nodeKey,mixed  $nodeValue): mixed {
         if (array_key_exists('diffStatus', $nodeValue)) {
             switch ($nodeValue['diffStatus']) {
                 case 'updated':
@@ -42,7 +42,7 @@ function stylishMapping(array $resultDiffArr): array
 function addSpacesIfValIsArr(mixed $nodeValue): mixed
 {
     if (is_array($nodeValue)) {
-        $spacedResult = array_map(function ($key, $val): array {
+        $spacedResult = array_map(function (mixed $key, mixed $val): array {
             $spacedValue = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
             return ["  $key" => $spacedValue];
         }, array_keys($nodeValue), array_values($nodeValue));
