@@ -2,7 +2,7 @@
 
 namespace Differ\Differ;
 
-function stylishFormattingOfDiffResult(array $resultDiffArr): string
+function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | null
 {
     $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
     if ($stylishResultArray === false) {
@@ -13,7 +13,7 @@ function stylishFormattingOfDiffResult(array $resultDiffArr): string
 
 function stylishMapping(array $resultDiffArr): array
 {
-    $stylishResult = array_map(function (mixed $nodeKey, mixed $nodeValue): array | string | null {
+    $stylishResult = array_map(function (mixed $nodeKey, mixed $nodeValue): array {
         if (array_key_exists('diffStatus', $nodeValue)) {
             switch ($nodeValue['diffStatus']) {
                 case 'updated':
