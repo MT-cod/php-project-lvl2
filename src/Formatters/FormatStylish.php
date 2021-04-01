@@ -2,41 +2,44 @@
 
 namespace Differ\Differ;
 
-function stylishFormattingOfDiffResult(array $resultDiffArr): string
+function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | null
 {
     $stylishResultArray = json_encode(stylishMapping($resultDiffArr), JSON_PRETTY_PRINT);
-    return preg_filter("/  \"|\"|\,/", '', $stylishResultArray);
+    return ($stylishResultArray) ? preg_filter("/  \"|\"|\,/", '', $stylishResultArray) : exit('Err');
 }
 
 function stylishMapping(array $resultDiffArr): array
 {
-    return array_reduce(array_keys($resultDiffArr), function ($stylishResult, $key) use ($resultDiffArr) {
-        if (array_key_exists('diffStatus', $resultDiffArr[$key])) {
-            switch ($resultDiffArr[$key]['diffStatus']) {
+    $stylishResult = array_map(function ($nodeKey, $nodeValue): array {
+        if (array_key_exists('diffStatus', $nodeValue)) {
+            switch ($nodeValue['diffStatus']) {
                 case 'updated':
-                    $stylishResult["- $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['oldValue']);
-                    $stylishResult["+ $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['newValue']);
-                    break;
+                    $nodeValueCheckedOld = addSpacesIfValIsArr($nodeValue['oldValue']);
+                    $nodeValueCheckedNew = addSpacesIfValIsArr($nodeValue['newValue']);
+                    return ["- $nodeKey" => $nodeValueCheckedOld, "+ $nodeKey" => $nodeValueCheckedNew];
                 case 'deleted':
-                    $stylishResult["- $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
-                    break;
+                    $nodeValueChecked = addSpacesIfValIsArr($nodeValue['value']);
+                    return ["- $nodeKey" => $nodeValueChecked];
                 case 'added':
-                    $stylishResult["+ $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
-                    break;
+                    $nodeValueChecked = addSpacesIfValIsArr($nodeValue['value']);
+                    return ["+ $nodeKey" => $nodeValueChecked];
                 case 'unchanged':
-                    $stylishResult["  $key"] = addSpacesIfValIsArr($resultDiffArr[$key]['value']);
+                    $nodeValueChecked = addSpacesIfValIsArr($nodeValue['value']);
+                    return ["  $nodeKey" => $nodeValueChecked];
             }
         } else {
-            $stylishResult["  $key"] = stylishMapping($resultDiffArr[$key]);
+            $nodeValueRecurs = stylishMapping($nodeValue);
+            return ["  $nodeKey" => $nodeValueRecurs];
         }
-        return $stylishResult;
-    }, []);
+    }, array_keys($resultDiffArr), array_values($resultDiffArr));
+    $flattenedStylishResult = array_reduce($stylishResult, fn($res, $arr) => $res + $arr, []);
+    return $flattenedStylishResult;
 }
 
 function addSpacesIfValIsArr(mixed $nodeValue): mixed
 {
     if (is_array($nodeValue)) {
-        $spacedResult = array_map(function ($key, $val) {
+        $spacedResult = array_map(function ($key, $val): array {
             $spacedValue = (is_array($val)) ? addSpacesIfValIsArr($val) : $val;
             return ["  $key" => $spacedValue];
         }, array_keys($nodeValue), array_values($nodeValue));
