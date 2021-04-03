@@ -3,7 +3,7 @@
 namespace Differ\Differ;
 
 //Головная функция дифа
-function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat = 'stylish'): string
+function genDiff(string $pathToFile1, string $pathToFile2, string $outFormat = 'stylish'): array | bool | string | null
 {
     $arr1 = getAssocArrayFromFile($pathToFile1);
     $arr2 = getAssocArrayFromFile($pathToFile2);
@@ -11,7 +11,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat 
     $resultDiffArr = genDiffFromArrays($arr1, $arr2);
     //echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
     //print_r($resultDiffArr);
-    return resultArrayToResultString($resultDiffArr, $outputFormat);
+    return resultArrayToResultString($resultDiffArr, $outFormat);
 }
 
 //Генерируем результирующий массив отличий 2-ух массивов
