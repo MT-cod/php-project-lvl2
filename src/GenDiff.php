@@ -9,7 +9,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat 
     $arr2 = getAssocArrayFromFile($pathToFile2);
 
     $resultDiffArr = genDiffFromArrays($arr1, $arr2);
-    //echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
+    // echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
     return resultArrayToResultString($resultDiffArr, $outputFormat);
 }
 
