@@ -6,7 +6,7 @@ use function PHPUnit\Framework\isEmpty;
 
 function plainFormattingOfDiffResult(array $resultDiffArr, string $parents = ''): string
 {
-    $plainResultArr = array_map(function ($node) use ($parents) {
+    $plainResultArr = array_map(function ($node) use ($parents): string {
         if (array_key_exists('diffStatus', $node)) {
             switch ($node['diffStatus']) {
                 case 'updated':

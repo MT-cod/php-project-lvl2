@@ -2,7 +2,7 @@
 
 namespace Differ\Differ;
 
-function resultArrayToResultString(array $resultDiffArr, string $format): string
+function resultArrayToResultString(array $resultDiffArr, string $format): array | string | bool | null
 {
     switch ($format) {
         case 'stylish':

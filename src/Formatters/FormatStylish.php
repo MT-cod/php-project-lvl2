@@ -13,7 +13,7 @@ function stylishFormattingOfDiffResult(array $resultDiffArr): array | string | n
 
 function stylishMapping(array $resultDiffArr): array
 {
-    $stylishResult = array_map(function ($node) {
+    $stylishResult = array_map(function ($node): array {
         if (array_key_exists('diffStatus', $node)) {
             switch ($node['diffStatus']) {
                 case 'updated':
