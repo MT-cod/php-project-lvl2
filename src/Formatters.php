@@ -12,6 +12,6 @@ function resultArrayToResultString(array $resultDiffArr, string $format): string
         case 'json':
             return jsonFormattingOfDiffResult($resultDiffArr);
         default:
-            exit("\nError. Unrecognised type of format ($format).\n");
+            return "\nError. Unrecognised type of format ($format).\n";
     }
 }
