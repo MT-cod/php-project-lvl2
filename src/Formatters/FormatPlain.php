@@ -23,6 +23,7 @@ function plainFormattingOfDiffResult(array $resultDiffArr, string $parents = '')
             $parentsForIter = $parents . $node['nodeKey'] . '.';
             return plainFormattingOfDiffResult($node['child'], $parentsForIter);
         }
+        return '';
     }, $resultDiffArr);
     $filteredPlainResultArr = array_filter($plainResultArr, fn($row) => $row != '');
     return implode("\n", $filteredPlainResultArr);

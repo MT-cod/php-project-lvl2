@@ -37,6 +37,7 @@ function stylishMapping(array $resultDiffArr): array
             $childRecurs = stylishMapping($node['child']);
             return ["  " . $node['nodeKey'] => $childRecurs];
         }
+        return [];
     }, $resultDiffArr);
     $flattenedStylishResult = array_reduce($stylishResult, fn($res, $val) => $res + $val, []);
     return $flattenedStylishResult;
