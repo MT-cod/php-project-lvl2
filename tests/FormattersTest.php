@@ -88,92 +88,118 @@ Property 'common.setting6.ops' was added with value: 'vops'
 Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
-Property 'group3' was added with value: [complex value]", '{
-    "common": {
-        "follow": {
-            "diffStatus": "added",
-            "value": false
-        },
-        "setting1": {
-            "diffStatus": "unchanged",
-            "value": "Value 1"
-        },
-        "setting2": {
-            "diffStatus": "deleted",
-            "value": 200
-        },
-        "setting3": {
-            "diffStatus": "updated",
-            "oldValue": true,
-            "newValue": null
-        },
-        "setting4": {
-            "diffStatus": "added",
-            "value": "blah blah"
-        },
-        "setting5": {
-            "diffStatus": "added",
-            "value": {
-                "key5": "value5"
+Property 'group3' was added with value: [complex value]", '[
+    {
+        "nodeKey": "common",
+        "child": [
+            {
+                "nodeKey": "follow",
+                "nodeValue": false,
+                "diffStatus": "added"
+            },
+            {
+                "nodeKey": "setting1",
+                "nodeValue": "Value 1",
+                "diffStatus": "unchanged"
+            },
+            {
+                "nodeKey": "setting2",
+                "nodeValue": 200,
+                "diffStatus": "deleted"
+            },
+            {
+                "nodeKey": "setting3",
+                "nodeValueOld": true,
+                "nodeValueNew": null,
+                "diffStatus": "updated"
+            },
+            {
+                "nodeKey": "setting4",
+                "nodeValue": "blah blah",
+                "diffStatus": "added"
+            },
+            {
+                "nodeKey": "setting5",
+                "nodeValue": {
+                    "key5": "value5"
+                },
+                "diffStatus": "added"
+            },
+            {
+                "nodeKey": "setting6",
+                "child": [
+                    {
+                        "nodeKey": "doge",
+                        "child": [
+                            {
+                                "nodeKey": "wow",
+                                "nodeValueOld": "",
+                                "nodeValueNew": "so much",
+                                "diffStatus": "updated"
+                            }
+                        ]
+                    },
+                    {
+                        "nodeKey": "key",
+                        "nodeValue": "value",
+                        "diffStatus": "unchanged"
+                    },
+                    {
+                        "nodeKey": "ops",
+                        "nodeValue": "vops",
+                        "diffStatus": "added"
+                    }
+                ]
             }
-        },
-        "setting6": {
-            "doge": {
-                "wow": {
-                    "diffStatus": "updated",
-                    "oldValue": "",
-                    "newValue": "so much"
-                }
+        ]
+    },
+    {
+        "nodeKey": "group1",
+        "child": [
+            {
+                "nodeKey": "baz",
+                "nodeValueOld": "bas",
+                "nodeValueNew": "bars",
+                "diffStatus": "updated"
             },
-            "key": {
-                "diffStatus": "unchanged",
-                "value": "value"
+            {
+                "nodeKey": "foo",
+                "nodeValue": "bar",
+                "diffStatus": "unchanged"
             },
-            "ops": {
-                "diffStatus": "added",
-                "value": "vops"
+            {
+                "nodeKey": "nest",
+                "nodeValueOld": {
+                    "key": "value"
+                },
+                "nodeValueNew": "str",
+                "diffStatus": "updated"
             }
-        }
+        ]
     },
-    "group1": {
-        "baz": {
-            "diffStatus": "updated",
-            "oldValue": "bas",
-            "newValue": "bars"
-        },
-        "foo": {
-            "diffStatus": "unchanged",
-            "value": "bar"
-        },
-        "nest": {
-            "diffStatus": "updated",
-            "oldValue": {
-                "key": "value"
-            },
-            "newValue": "str"
-        }
-    },
-    "group2": {
-        "diffStatus": "deleted",
-        "value": {
+    {
+        "nodeKey": "group2",
+        "nodeValue": {
             "abc": 12345,
             "deep": {
                 "id": 45
             }
-        }
+        },
+        "diffStatus": "deleted"
     },
-    "group3": {
-        "diffStatus": "added",
-        "value": {
+    {
+        "nodeKey": "group3",
+        "nodeValue": {
             "deep": {
                 "id": {
                     "number": 45
                 }
             },
             "fee": 100500
-        }
+        },
+        "diffStatus": "added"
     }
-}', '[
+]', '[
     {
         "nodeKey": "common",
         "child": [

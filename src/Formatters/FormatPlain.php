@@ -2,28 +2,29 @@
 
 namespace Differ\Differ;
 
-function plainFormattingOfDiffResult(array $resultDiffArr, string $parents = '', array &$plainResultArr = []): string
+use function PHPUnit\Framework\isEmpty;
+
+function plainFormattingOfDiffResult(array $resultDiffArr, string $parents = ''): string
 {
-    array_walk($resultDiffArr, function ($item, $key) use ($parents, &$plainResultArr) {
-        if (array_key_exists('diffStatus', $item)) {
-            switch ($item['diffStatus']) {
+    $plainResultArr = array_map(function ($node) use ($parents) {
+        if (array_key_exists('diffStatus', $node)) {
+            switch ($node['diffStatus']) {
                 case 'updated':
-                    $oldValue = simplOrCompVal($item['oldValue']);
-                    $newValue = simplOrCompVal($item['newValue']);
-                    $plainResultArr[] = "Property '$parents$key' was updated. From $oldValue to $newValue";
-                    break;
+                    $Old = simplOrCompVal($node['nodeValueOld']);
+                    $New = simplOrCompVal($node['nodeValueNew']);
+                    return "Property '$parents" . $node['nodeKey'] . "' was updated. From $Old to $New";
                 case 'deleted':
-                    $plainResultArr[] = "Property '$parents$key' was removed";
-                    break;
+                    return "Property '$parents" . $node['nodeKey'] . "' was removed";
                 case 'added':
-                    $value = simplOrCompVal($item['value']);
-                    $plainResultArr[] = "Property '$parents$key' was added with value: $value";
+                    $nodeValue = simplOrCompVal($node['nodeValue']);
+                    return "Property '$parents" . $node['nodeKey'] . "' was added with value: $nodeValue";
             }
         } else {
-            $parentsForIter = "$parents$key.";
-            plainFormattingOfDiffResult($item, $parentsForIter, $plainResultArr);
+            $parentsForIter = $parents . $node['nodeKey'] . '.';
+            return plainFormattingOfDiffResult($node['child'], $parentsForIter);
         }
-    });
+    }, $resultDiffArr);
+    $plainResultArr = array_filter($plainResultArr, fn($row) => $row != '');
     return implode("\n", $plainResultArr);
 }
 
