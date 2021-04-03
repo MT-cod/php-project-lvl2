@@ -9,43 +9,54 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $outputFormat 
     $arr2 = getAssocArrayFromFile($pathToFile2);
 
     $resultDiffArr = genDiffFromArrays($arr1, $arr2);
-    // echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
+    echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
+    //print_r($resultDiffArr);
     return resultArrayToResultString($resultDiffArr, $outputFormat);
 }
 
-//Возвращаем результирующий массив отличий 2-ух массивов
+//Генерируем результирующий массив отличий 2-ух массивов
 function genDiffFromArrays(array $arr1, array $arr2): array
 {
     $mergedAndSortedArrays = mergeAndSortArrs($arr1, $arr2);
-    $diffResult = array_map(function ($nodeKey, $nodeValue) use ($arr1, $arr2) {
-        if (!key_exists($nodeKey, $arr1) && key_exists($nodeKey, $arr2)) {
-            return [$nodeKey => ['diffStatus' => 'added', 'value' => $nodeValue]];
-        } elseif (key_exists($nodeKey, $arr1) && !key_exists($nodeKey, $arr2)) {
-            return [$nodeKey => ['diffStatus' => 'deleted', 'value' => $nodeValue]];
+    $diffResult = array_map(function ($nodeData) use ($arr1, $arr2) {
+        if (!key_exists($nodeData['nodeKey'], $arr1) && key_exists($nodeData['nodeKey'], $arr2)) {
+            return ['nodeKey' => $nodeData['nodeKey'], 'nodeValue' => $nodeData['child'], 'diffStatus' => 'added'];
+        } elseif (key_exists($nodeData['nodeKey'], $arr1) && !key_exists($nodeData['nodeKey'], $arr2)) {
+            return ['nodeKey' => $nodeData['nodeKey'], 'nodeValue' => $nodeData['child'], 'diffStatus' => 'deleted'];
         } else {
-            if ($arr1[$nodeKey] === $arr2[$nodeKey]) {
-                return [$nodeKey => ['diffStatus' => 'unchanged', 'value' => $nodeValue]];
+            if ($arr1[$nodeData['nodeKey']] === $arr2[$nodeData['nodeKey']]) {
+                return [
+                    'nodeKey' => $nodeData['nodeKey'],
+                    'nodeValue' => $nodeData['child'],
+                    'diffStatus' => 'unchanged'
+                ];
             } else {
-                if (is_array($arr1[$nodeKey]) && is_array($arr2[$nodeKey])) {
-                    $nodeValueRecurs = genDiffFromArrays($arr1[$nodeKey], $arr2[$nodeKey]);
-                    return [$nodeKey => $nodeValueRecurs];
+                if (is_array($arr1[$nodeData['nodeKey']]) && is_array($arr2[$nodeData['nodeKey']])) {
+                    $childsRecurs = genDiffFromArrays($arr1[$nodeData['nodeKey']], $arr2[$nodeData['nodeKey']]);
+                    return ['nodeKey' => $nodeData['nodeKey'], 'child' => $childsRecurs];
                 } else {
-                    return [$nodeKey => [
-                        'diffStatus' => 'updated', 'oldValue' => $arr1[$nodeKey], 'newValue' => $arr2[$nodeKey]
-                    ]];
+                    return [
+                        'nodeKey' => $nodeData['nodeKey'],
+                        'nodeValueOld' => $arr1[$nodeData['nodeKey']],
+                        'nodeValueNew' => $arr2[$nodeData['nodeKey']],
+                        'diffStatus' => 'updated'
+                    ];
                 }
             }
         }
-    }, array_keys($mergedAndSortedArrays), array_values($mergedAndSortedArrays));
-    $flattenedDiffResult = array_reduce($diffResult, fn($res, $arr) => $res + $arr, []);
-    ksort($flattenedDiffResult);
-    return $flattenedDiffResult;
+    }, $mergedAndSortedArrays);
+    return $diffResult;
 }
 
-//Мёржим массивы в один и сортируем после мёржа для дальнейшего поиска отличий
+//Складываем массивы в один, подготавливаем начальную структуру и сортируем для дальнейшего поиска отличий
 function mergeAndSortArrs(array $arr1, array $arr2): array
 {
-    $merged = array_merge($arr1, $arr2);
-    ksort($merged);
-    return $merged;
+    $merged = $arr2 + $arr1;
+    $reduced = array_map(
+        fn($nodeKey, $child) => ['nodeKey' => $nodeKey, 'child' => $child],
+        array_keys($merged),
+        array_values($merged)
+    );
+    sort($reduced);
+    return $reduced;
 }
