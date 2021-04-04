@@ -29,8 +29,10 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
                 ];
             } else {
                 if (is_array($arr1[$nodeData['nodeKey']]) && is_array($arr2[$nodeData['nodeKey']])) {
-                    $childsRecurs = genDiffFromArrays($arr1[$nodeData['nodeKey']], $arr2[$nodeData['nodeKey']]);
-                    return ['nodeKey' => $nodeData['nodeKey'], 'child' => $childsRecurs];
+                    return [
+                        'nodeKey' => $nodeData['nodeKey'],
+                        'child' => genDiffFromArrays($arr1[$nodeData['nodeKey']], $arr2[$nodeData['nodeKey']])
+                    ];
                 } else {
                     return [
                         'nodeKey' => $nodeData['nodeKey'],
