@@ -51,11 +51,11 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
 function mergeAndSortArrays(array $arr1, array $arr2): array
 {
     $merged = $arr2 + $arr1;
-    $sorted = sortBy($merged, fn($row) => $row, 'ksort');
     $reduced = array_map(
         fn($nodeKey, $child) => ['nodeKey' => $nodeKey, 'child' => $child],
-        array_keys($sorted),
-        array_values($sorted)
+        array_keys($merged),
+        array_values($merged)
     );
-    return $reduced;
+    $sorted = array_values(sortBy($reduced, fn($row) => $row['nodeKey']));
+    return $sorted;
 }
