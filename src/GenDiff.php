@@ -12,10 +12,10 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $outFormat = '
 }
 
 //Генерируем результирующий массив отличий 2-ух массивов
-function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): array
+function genDiffFromArrays(array $arr1, array $arr2): array
 {
     $mergedAndSortedArrays = mergeAndSortArrays($arr1, $arr2);
-    $diffResult = array_map(function ($nodeData) use ($arr1, $arr2) {
+    return array_map(function ($nodeData) use ($arr1, $arr2) {
         if (!key_exists($nodeData['nodeKey'], $arr1) && key_exists($nodeData['nodeKey'], $arr2)) {
             return ['nodeKey' => $nodeData['nodeKey'], 'nodeValue' => $nodeData['child'], 'diffStatus' => 'added'];
         } elseif (key_exists($nodeData['nodeKey'], $arr1) && !key_exists($nodeData['nodeKey'], $arr2)) {
@@ -44,7 +44,6 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
             }
         }
     }, $mergedAndSortedArrays);
-    return $diffResult;
 }
 
 //Складываем массивы в один, сортируем и подготавливаем начальную структуру для дальнейшего поиска отличий
