@@ -25,7 +25,7 @@ Options:
   -f --format <fmt>             Report format [default: stylish]
 DOCOPT;
 
-$startingParams = \Docopt::handle($doc, array('version'=>'v1.0.0'));
+$startingParams = \Docopt::handle($doc, array('version'=>'v1.0.1'));
 
 $pathToFile1 = $startingParams['<firstFile>'];
 $pathToFile2 = $startingParams['<secondFile>'];
