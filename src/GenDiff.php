@@ -2,15 +2,14 @@
 
 namespace Differ\Differ;
 
+use function Funct\Collection\sortBy;
+
 //Головная функция дифа
 function genDiff(string $pathToFile1, string $pathToFile2, string $outFormat = 'stylish'): array | bool | string | null
 {
     $arr1 = getAssocArrayFromFile($pathToFile1);
     $arr2 = getAssocArrayFromFile($pathToFile2);
-
     $resultDiffArr = genDiffFromArrays($arr1, $arr2);
-    //echo(json_encode($resultDiffArr, JSON_PRETTY_PRINT));
-    //print_r($resultDiffArr);
     return resultArrayToResultString($resultDiffArr, $outFormat);
 }
 
@@ -48,19 +47,15 @@ function genDiffFromArrays(array $arr1, array $arr2, array $diffResult = []): ar
     return $diffResult;
 }
 
-//Складываем массивы в один, подготавливаем начальную структуру и сортируем для дальнейшего поиска отличий
+//Складываем массивы в один, сортируем и подготавливаем начальную структуру для дальнейшего поиска отличий
 function mergeAndSortArrays(array $arr1, array $arr2): array
 {
     $merged = $arr2 + $arr1;
+    $sorted = sortBy($merged, fn($row) => $row, 'ksort');
     $reduced = array_map(
         fn($nodeKey, $child) => ['nodeKey' => $nodeKey, 'child' => $child],
-        array_keys($merged),
-        array_values($merged)
+        array_keys($sorted),
+        array_values($sorted)
     );
-    $sorting = function (array $arr): array {
-        $sort = $arr;
-        sort($sort);
-        return $sort;
-    };
-    return $sorting($reduced);
+    return $reduced;
 }
