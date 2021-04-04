@@ -2,8 +2,6 @@
 
 namespace Differ\Differ;
 
-use function Funct\Collection\sortBy;
-
 //Головная функция дифа
 function genDiff(string $pathToFile1, string $pathToFile2, string $outFormat = 'stylish'): array | bool | string | null
 {
@@ -56,6 +54,6 @@ function mergeAndSortArrays(array $arr1, array $arr2): array
         array_keys($merged),
         array_values($merged)
     );
-    $sorted = array_values(sortBy($reduced, fn($row) => $row['nodeKey']));
+    $sorted = array_values(collect($reduced)->sort()->values()->all());
     return $sorted;
 }
