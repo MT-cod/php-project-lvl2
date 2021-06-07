@@ -33,7 +33,8 @@
         "docopt/docopt": "^1.0",
         "symfony/yaml": "^5.2",
         "tightenco/collect": "^8.34",
-        "ext-curl": "*"
+        "ext-curl": "*",
+      "ext-dom": "*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
